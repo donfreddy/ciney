@@ -29,16 +29,16 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun CineyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
-  val colors = if (darkTheme) {
+  val cineyColors = if (darkTheme) {
     DarkColorPalette
   } else {
     LightColorPalette
   }
 
   MaterialTheme(
-    colors = colors,
-    typography = Typography,
-    shapes = Shapes,
+    colors = cineyColors,
+    typography = CineyTypography,
+    shapes = CineyShapes,
     content = content
   )
 }
