@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Ciney</string>
+
+  <!--  Bottom nav-->
+  <string name="title_movie">Films</string>
+  <string name="title_tvshow">Séries</string>
+  <string name="title_search">Recherche</string>
+  <string name="title_profile">Profil</string>
+  <string name="title_favorites">Favoris</string>
+</resources>

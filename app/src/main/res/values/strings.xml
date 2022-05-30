@@ -1,5 +1,11 @@
 <resources>
   <string name="app_name">Ciney</string>
-  <string name="screen_title_home">Home</string>
-  <string name="screen_title_search">Search</string>
+
+  <!--  Bottom nav-->
+  <string name="title_movie">Movies</string>
+  <string name="title_tvshow">Tv Shows</string>
+  <string name="title_search">Search</string>
+  <string name="title_profile">Profile</string>
+  <string name="title_favorites">Favorites</string>
+  <string name="title_activity_main">MainActivity</string>
 </resources>

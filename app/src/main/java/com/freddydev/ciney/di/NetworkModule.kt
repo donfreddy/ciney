@@ -1,6 +1,6 @@
 package com.freddydev.ciney.di
 
-import com.freddydev.ciney.service.CineyService
+import com.freddydev.ciney.data.api.ApiService
 import com.freddydev.ciney.util.interceptor.ApiKeyInterceptor
 import com.google.gson.Gson
 import com.freddydev.ciney.BuildConfig
@@ -58,7 +58,7 @@ object NetworkModule {
 
   @Provides
   @Singleton
-  fun provideCineyService(retrofit: Retrofit): CineyService {
-    return retrofit.create(CineyService::class.java)
+  fun provideCineyService(retrofit: Retrofit): ApiService {
+    return retrofit.create(ApiService::class.java)
   }
 }

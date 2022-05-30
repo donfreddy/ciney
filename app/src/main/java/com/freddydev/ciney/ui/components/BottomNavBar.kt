@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -18,12 +19,15 @@ import com.freddydev.ciney.navigation.BottomNavItem
 @Composable
 fun BottomNavBar(navController: NavController) {
   val items = listOf(
-    BottomNavItem.Home,
-    BottomNavItem.Search
+    BottomNavItem.Movie,
+    BottomNavItem.TvShow,
+    BottomNavItem.Search,
+    BottomNavItem.Favorite,
+    BottomNavItem.Profile
   )
 
   BottomNavigation(
-    backgroundColor = colorResource(id = R.color.purple_200),
+    backgroundColor = colorResource(id = R.color.blue),
     contentColor = Color.White
   ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -31,8 +35,13 @@ fun BottomNavBar(navController: NavController) {
 
     items.forEach { item ->
       BottomNavigationItem(
-        icon = { Icon(imageVector = item.icon, contentDescription = item.route) },
-        label = { Text(text = stringResource(id = item.titleResId)) },
+        icon = { Icon(painter = painterResource(item.icon), contentDescription = item.route) },
+        label = {
+          Text(
+            text = stringResource(id = item.titleResId),
+            softWrap = false
+          )
+        },
         selectedContentColor = Color.White,
         unselectedContentColor = Color.White.copy(0.4f),
         alwaysShowLabel = true,

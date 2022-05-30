@@ -12,9 +12,9 @@ fun CineyNavigation() {
 
   NavHost(
     navController = navController,
-    startDestination = CineyScreens.Home.route
+    startDestination = CineyScreens.Movie.route
   ) {
-    composable(route = CineyScreens.Home.route) {
+    composable(route = CineyScreens.Movie.route) {
       MainScreen()
     }
   }

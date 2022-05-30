@@ -2,6 +2,8 @@
 <resources>
 
   <style name="Theme.Ciney" parent="android:Theme.Material.Light.NoActionBar">
-    <item name="android:statusBarColor">@color/purple_700</item>
+
+    <!-- Status bar color. -->
+    <item name="android:statusBarColor">@color/blue</item>
   </style>
 </resources>

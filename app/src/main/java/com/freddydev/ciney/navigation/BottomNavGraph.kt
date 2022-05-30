@@ -1,6 +1,5 @@
 package com.freddydev.ciney.navigation
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentSize
@@ -9,41 +8,51 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.freddydev.ciney.R
+import com.freddydev.ciney.ui.movie.MovieScreen
 
 @Composable
 fun BottomNavGraph(navController: NavHostController) {
   NavHost(
     navController = navController,
-    startDestination = BottomNavItem.Home.route
+    startDestination = BottomNavItem.Movie.route
   ) {
-    composable(BottomNavItem.Home.route) {
-      HomeScreen()
+    composable(BottomNavItem.Movie.route) {
+      MovieScreen()
+    }
+
+    composable(BottomNavItem.TvShow.route) {
+      TvShowScreen()
     }
 
     composable(BottomNavItem.Search.route) {
       SearchScreen()
     }
+
+    composable(BottomNavItem.Favorite.route) {
+      FavoriteScreen()
+    }
+
+    composable(BottomNavItem.Profile.route) {
+      ProfileScreen()
+    }
   }
 
 }
 
+
 @Composable
-fun HomeScreen() {
+fun TvShowScreen() {
   Column(
     modifier = Modifier
       .fillMaxSize()
       .wrapContentSize(Alignment.Center)
   ) {
     Text(
-      text = "Home Screen",
+      text = "TvShow Screen",
       modifier = Modifier.align(Alignment.CenterHorizontally),
       textAlign = TextAlign.Center,
       style = MaterialTheme.typography.h6
@@ -68,5 +77,40 @@ fun SearchScreen() {
     )
   }
 }
+
+@Composable
+fun FavoriteScreen() {
+  Column(
+    modifier = Modifier
+      .fillMaxSize()
+      .wrapContentSize(Alignment.Center)
+  ) {
+    Text(
+      text = "Favorite Screen",
+      modifier = Modifier.align(Alignment.CenterHorizontally),
+      textAlign = TextAlign.Center,
+      style = MaterialTheme.typography.h6
+
+    )
+  }
+}
+
+@Composable
+fun ProfileScreen() {
+  Column(
+    modifier = Modifier
+      .fillMaxSize()
+      .wrapContentSize(Alignment.Center)
+  ) {
+    Text(
+      text = "Profile Screen",
+      modifier = Modifier.align(Alignment.CenterHorizontally),
+      textAlign = TextAlign.Center,
+      style = MaterialTheme.typography.h6
+
+    )
+  }
+}
+
 
 

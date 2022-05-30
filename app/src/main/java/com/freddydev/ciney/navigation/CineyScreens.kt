@@ -2,8 +2,11 @@ package com.freddydev.ciney.navigation
 
 
 sealed class CineyScreens(val route: String) {
-  object Home : CineyScreens("home")
+  object Movie : CineyScreens("movie")
+  object TvShow : CineyScreens("tvshow")
   object Search : CineyScreens("search")
+  object Favorite : CineyScreens("favorite")
+  object Profile : CineyScreens("profile")
 
   fun withArgs(vararg args: String): String {
     return buildString {
