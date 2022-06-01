@@ -3,7 +3,9 @@
 
   <style name="Theme.Ciney" parent="android:Theme.Material.Light.NoActionBar">
 
-    <!-- Status bar color. -->
-    <item name="android:statusBarColor">@color/blue</item>
+<!--    <item name="android:colorPrimary">#ff00ff</item>-->
+<!--    <item name="android:colorAccent">#ff00ff</item>-->
+    <item name="android:statusBarColor">@color/immersive_sys_ui</item>
+    <item name="android:navigationBarColor">@color/nav_bar</item>
   </style>
 </resources>

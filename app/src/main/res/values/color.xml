@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="immersive_sys_ui">#33000000</color>
+  <color name="nav_bar">@color/immersive_sys_ui</color>
+
+  <color name="blue">#FF14213D</color>
+  <color name="orange">#FFFCA311</color>
+  <color name="light_gray">#FF6c757d</color>
+</resources>
