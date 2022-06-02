@@ -1,4 +1,4 @@
-package com.freddydev.ciney.navigation
+package com.freddydev.ciney.ui.navigation
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

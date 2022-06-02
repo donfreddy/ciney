@@ -1,4 +1,4 @@
-package com.freddydev.ciney.navigation
+package com.freddydev.ciney.ui.navigation
 
 
 sealed class CineyScreens(val route: String) {

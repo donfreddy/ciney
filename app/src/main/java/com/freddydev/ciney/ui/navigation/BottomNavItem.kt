@@ -1,17 +1,7 @@
-package com.freddydev.ciney.navigation
+package com.freddydev.ciney.ui.navigation
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.sharp.FavoriteBorder
-import androidx.compose.material.icons.sharp.Person
-import androidx.compose.material.icons.sharp.Search
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.input.key.Key.Companion.I
-import androidx.compose.ui.res.painterResource
 import com.freddydev.ciney.R
 
 sealed class BottomNavItem(

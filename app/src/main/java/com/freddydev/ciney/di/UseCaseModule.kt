@@ -16,8 +16,9 @@ class UseCaseModule {
   // MOVIES
   // -------------------
 
+
   @Provides
-  fun provideGetNowPlayingMoviesUseCase(
+  fun provideGetNowPlayingMoviesUseCase (
     movieRepository: MovieRepository,
     page: Int?
   ): GetNowPlayingMoviesUseCase {

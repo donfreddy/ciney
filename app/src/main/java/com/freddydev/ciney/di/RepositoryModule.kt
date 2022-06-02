@@ -13,9 +13,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
-  @Singleton
   @Provides
-  fun provideMovieRepository(movieRemoteDataSource: MovieRemoteDataSourceImpl): MovieRepository {
+  fun provideMovieRepository (movieRemoteDataSource: MovieRemoteDataSourceImpl): MovieRepository {
     return MovieRepositoryImpl(movieRemoteDataSource = movieRemoteDataSource)
   }
 }

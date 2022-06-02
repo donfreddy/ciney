@@ -1,4 +1,4 @@
-package com.freddydev.ciney.navigation
+package com.freddydev.ciney.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost

@@ -3,7 +3,7 @@ package com.freddydev.ciney.ui.main
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.rememberNavController
-import com.freddydev.ciney.navigation.BottomNavGraph
+import com.freddydev.ciney.ui.navigation.BottomNavGraph
 import com.freddydev.ciney.ui.components.BottomNavBar
 
 @Composable

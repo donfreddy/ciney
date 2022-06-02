@@ -10,15 +10,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.freddydev.ciney.R
-import com.freddydev.ciney.navigation.BottomNavItem
+import com.freddydev.ciney.ui.navigation.BottomNavItem
 
 @Composable
 fun BottomNavBar(navController: NavController) {
-  val items = listOf(
+  val tabs = listOf(
     BottomNavItem.Movie,
     BottomNavItem.TvShow,
     BottomNavItem.Search,
@@ -28,26 +29,27 @@ fun BottomNavBar(navController: NavController) {
 
   BottomNavigation(
     backgroundColor = colorResource(id = R.color.blue),
-    contentColor = Color.White
+    contentColor = Color.White,
+    elevation = 8.dp,
   ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
 
-    items.forEach { item ->
+    tabs.forEach { tab ->
       BottomNavigationItem(
-        icon = { Icon(painter = painterResource(item.icon), contentDescription = item.route) },
+        icon = { Icon(painter = painterResource(tab.icon), contentDescription = tab.route) },
         label = {
           Text(
-            text = stringResource(id = item.titleResId),
+            text = stringResource(id = tab.titleResId),
             softWrap = false
           )
         },
         selectedContentColor = Color.White,
         unselectedContentColor = Color.White.copy(0.4f),
         alwaysShowLabel = true,
-        selected = currentDestination?.hierarchy?.any { it.route == item.route } == true,
+        selected = currentDestination?.hierarchy?.any { it.route == tab.route } == true,
         onClick = {
-          navController.navigate(item.route) {
+          navController.navigate(tab.route) {
             navController.graph.startDestinationRoute?.let { route ->
               popUpTo(route) {
                 saveState = true
