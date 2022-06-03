@@ -1,15 +1,19 @@
-package com.freddydev.ciney.ui.main
+package com.freddydev.ciney.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
-import com.freddydev.ciney.ui.navigation.CineyNavigation
-import com.freddydev.ciney.ui.theme.CineyTheme
+import com.freddydev.ciney.ui.CineyApp
+import com.freddydev.ciney.util.rememberWindowSizeClass
 import dagger.hilt.android.AndroidEntryPoint
 
+
+/**
+ * @author Don Freddy
+ * @date Jun 03, 2022 6:15:00 AM
+ * @description [MainActivity] is the entry point of the app.
+ */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,17 +23,8 @@ class MainActivity : ComponentActivity() {
     WindowCompat.setDecorFitsSystemWindows(window, false)
 
     setContent {
-      CineyTheme {
-        CineyNavigation()
-      }
+      val windowSizeClass = rememberWindowSizeClass()
+      CineyApp(windowSize = windowSizeClass) { finish() }
     }
-  }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-  CineyTheme {
-    CineyNavigation()
   }
 }
