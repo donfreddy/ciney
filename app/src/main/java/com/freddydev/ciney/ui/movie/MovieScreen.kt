@@ -1,10 +1,13 @@
 package com.freddydev.ciney.ui.movie
 
+import android.view.Surface
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,7 +18,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.freddydev.ciney.R
 
 @Composable
-fun MovieScreen() {// viewModel: MovieViewModel = hiltViewModel()
+fun MovieScreen(viewModel: MovieViewModel = hiltViewModel()) {
+
+  //  val movie: Movie? by viewModel.movieFlow.collectAsState(initial = null)
+
+  val text: String by viewModel.text.observeAsState(initial = "")
+
   Surface(
     modifier = Modifier
       .fillMaxWidth()
@@ -29,7 +37,7 @@ fun MovieScreen() {// viewModel: MovieViewModel = hiltViewModel()
         .wrapContentSize(Alignment.Center)
     ) {
       Text(
-        text = "Movie Screen",
+        text = text,
         modifier = Modifier.align(Alignment.CenterHorizontally),
         textAlign = TextAlign.Center,
         color = Color.White,

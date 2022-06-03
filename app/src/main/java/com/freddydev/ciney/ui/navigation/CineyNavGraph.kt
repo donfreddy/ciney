@@ -13,7 +13,7 @@ fun CineyNavGraph(
   modifier: Modifier = Modifier,
   navController: NavHostController = rememberNavController(),
   windowSize: WindowSize,
-  startDestination: String = Screens.Main.route,
+  startDestination: String = CineyScreen.Main.route,
   finishActivity: () -> Unit = {},
 ) {
   NavHost(
@@ -24,7 +24,7 @@ fun CineyNavGraph(
 
     // Main screens (movie, tv, search, settings)
     navigation(
-      route = Screens.Main.route,
+      route = CineyScreen.Main.route,
       startDestination = MainScreens.Movie.route,
     ) {
       bottomNaGraph(
@@ -35,40 +35,5 @@ fun CineyNavGraph(
     }
 
     // Detail screen
-  }
-}
-
-sealed class Screens(val route: String) {
-  object First : Screens("first")
-  object Main : Screens("main")
-  object MovieDetail : Screens("movie/{movieId}")
-  object TvShowDetail : Screens("tv/{movieId}")
-  object PersonDetail : Screens("person/{movieId}")
-
-
-  fun withArgs(vararg args: String): String {
-    return buildString {
-      append(route)
-      args.forEach { arg ->
-        append("/$arg")
-      }
-    }
-  }
-}
-
-sealed class MainScreens(val route: String) {
-  object Movie : MainScreens("movie")
-  object TvShow : MainScreens("tv")
-  object Search : MainScreens("search")
-  object Favorite : MainScreens("favorite")
-  object Profile : MainScreens("profile")
-
-  fun withArgs(vararg args: String): String {
-    return buildString {
-      append(route)
-      args.forEach { arg ->
-        append("/$arg")
-      }
-    }
   }
 }

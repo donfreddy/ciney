@@ -6,15 +6,17 @@ plugins {
   id 'org.jetbrains.kotlin.android'
 }
 
+apply from: '../dependencies.gradle'
+
 android {
-  compileSdk 32
+  compileSdk versions.compileSdk
 
   defaultConfig {
     applicationId "com.freddydev.ciney"
-    minSdk 21
-    targetSdk 32
-    versionCode 1
-    versionName "1.0"
+    minSdk versions.minSdk
+    targetSdk versions.compileSdk
+    versionCode versions.versionCode
+    versionName versions.versionName
 
     testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     vectorDrawables {
@@ -22,9 +24,12 @@ android {
     }
 
     buildConfigField "String", "API_KEY", "\"b838b78e9e0e25b39e41a2d3b197a08f\""
-    buildConfigField "String", "TMDB_BASE_URL", "\"https://api.themoviedb.org/3/\""
-    buildConfigField "String", "TMDB_IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/w500\""
+    buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+    buildConfigField "String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/w500\""
+    buildConfigField "String", "BASE_POSTER_URL", "\"https://image.tmdb.org/t/p/w342\""
+    buildConfigField "String", "BASE_BACKDROP_URL", "\"https://image.tmdb.org/t/p/w780\""
     buildConfigField "String", "YT_BASE_URL", "\"https://www.youtube.com/watch?v=\""
+    buildConfigField "String", "YT_THUMBNAIL_URL", "\"https://img.youtube.com/vi/\""
   }
 
   buildTypes {
@@ -67,10 +72,10 @@ dependencies {
 
   // Base
   implementation 'androidx.core:core-ktx:1.7.0'
-  implementation 'androidx.appcompat:appcompat:1.3.1'
-  implementation 'androidx.activity:activity-ktx:1.3.1'
+  implementation 'androidx.appcompat:appcompat:1.4.1'
   implementation "androidx.window:window:1.1.0-alpha02"
-  implementation 'androidx.activity:activity-compose:1.3.1'
+  implementation "androidx.activity:activity-ktx:$versions.activityVersion"
+  implementation "androidx.activity:activity-compose:$versions.activityVersion"
 
   // Compose
   implementation "androidx.compose.ui:ui:$compose_version"
@@ -110,6 +115,11 @@ dependencies {
   implementation "com.google.dagger:hilt-android:$hilt_version"
   kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
   implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+
+  // Room
+  kapt "androidx.room:room-compiler:$versions.roomVersion"
+  implementation "androidx.room:room-ktx:$versions.roomVersion"
+  implementation "androidx.room:room-runtime:$versions.roomVersion"
 
 
   // Retrofit

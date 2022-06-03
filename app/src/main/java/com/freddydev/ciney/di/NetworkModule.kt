@@ -1,9 +1,9 @@
 package com.freddydev.ciney.di
 
-import com.freddydev.ciney.data.api.ApiService
 import com.freddydev.ciney.util.interceptor.ApiKeyInterceptor
 import com.google.gson.Gson
 import com.freddydev.ciney.BuildConfig
+import com.freddydev.ciney.data.api.services.MovieService
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -51,14 +51,14 @@ object NetworkModule {
   fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
     return Retrofit.Builder()
       .client(okHttpClient)
-      .baseUrl(BuildConfig.TMDB_BASE_URL)
+      .baseUrl(BuildConfig.BASE_URL)
       .addConverterFactory(GsonConverterFactory.create(gson))
       .build()
   }
 
   @Provides
   @Singleton
-  fun provideCineyService(retrofit: Retrofit): ApiService {
-    return retrofit.create(ApiService::class.java)
+  fun provideMovieService(retrofit: Retrofit): MovieService {
+    return retrofit.create(MovieService::class.java)
   }
 }

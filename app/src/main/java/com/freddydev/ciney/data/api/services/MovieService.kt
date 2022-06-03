@@ -1,4 +1,4 @@
-package com.freddydev.ciney.data.api
+package com.freddydev.ciney.data.api.services
 
 import com.freddydev.ciney.domain.model.image.ImagesResult
 import com.freddydev.ciney.domain.model.movie.MovieDetail
@@ -8,11 +8,10 @@ import com.freddydev.ciney.domain.model.video.VideosResult
 import retrofit2.Response
 import retrofit2.http.*
 
-interface ApiService {
-
-  // -------------------
-  // MOVIES
-  // -------------------
+/**
+ * [Movies endpoints](https://developers.themoviedb.org/3/movies)
+ */
+interface MovieService {
 
   /** Get the most newly created movie. */
   @GET("/movie/latest")
@@ -20,19 +19,19 @@ interface ApiService {
 
   /** Get a list of movies in theatres. */
   @GET("/movie/now_playing")
-  fun nowPlayingMovies(@Query("page") page: Int? = 1): Response<MoviesResult>
+  fun nowPlaying(@Query("page") page: Int? = 1): Response<MoviesResult>
 
   /** Get a list of the current popular movies on TMDB. This list updates daily.*/
   @GET("/movie/popular")
-  fun popularMovies(@Query("page") page: Int): Response<MoviesResult>
+  fun popular(@Query("page") page: Int): Response<MoviesResult>
 
   /** Get the top rated movies on TMDB. */
   @GET("/movie/top_rated")
-  fun topRatedMovies(@Query("page") page: Int): Response<MoviesResult>
+  fun topRated(@Query("page") page: Int): Response<MoviesResult>
 
   /** Get a list of upcoming movies in theatres. */
   @GET("/movie/upcoming")
-  fun upcomingMovies(@Query("page") page: Int): Response<MoviesResult>
+  fun upcoming(@Query("page") page: Int): Response<MoviesResult>
 
   /** Get the primary information about a movie. */
   @GET("/movie/{movie_id}")
@@ -40,13 +39,13 @@ interface ApiService {
 
   /** Get a list of similar movies. */
   @GET("/movie/{movie_id}/similar")
-  fun similarMovies(
+  fun similar(
     @Path("movie_id") id: String, @Query("page") page: Int
   ): Response<MoviesResult>
 
   /** Get a list of recommended movies for a movie. */
   @GET("/movie/{movie_id}/recommendations")
-  fun recommendationsMovies(
+  fun recommendations(
     @Path("movie_id") id: String, @Query("page") page: Int
   ): Response<MoviesResult>
 
@@ -73,16 +72,4 @@ interface ApiService {
   /** Remove your rating for a movie. */
   @DELETE("/movie/{movie_id/rating}")
   fun deleteRating(@Path("movie_id") id: String): Response<MoviesResult>
-
-  // -------------------
-  // TV SHOWS
-  // -------------------
-
-  // Todo: Implement get artists
-
-  // -------------------
-  // ARTISTS
-  // -------------------
-
-  // Todo: Implement get artists
 }
