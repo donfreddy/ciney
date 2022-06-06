@@ -32,9 +32,10 @@ fun MovieScreen() {
 fun MovieContent() {
   val movieViewModel = hiltViewModel<MovieViewModel>()
 
-  val movie: List<Movie>? by movieViewModel.getNowPlaying().observeAsState(initial = null)
+  val movies: List<Movie>? by movieViewModel.getNowPlaying().observeAsState(initial = null)
+  // val movie: List<Movie>? by movieViewModel.getLatestMovie.observeAsState(initial = null)
 
-  println("### MovieScreen: ${movie?.size}")
+ //  println("### MovieScreen: ${movie?.size}")
 
   val text: String by movieViewModel.text.observeAsState(initial = "")
 

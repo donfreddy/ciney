@@ -4,16 +4,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.freddydev.ciney.R
@@ -58,29 +53,8 @@ fun CineyApp(windowSize: WindowSize, finishActivity: () -> Unit) {
       val isMovieScreen = destination?.route == MainScreens.Movie.route
 
       Scaffold(
-        // show top bar if true
         topBar = {
-          if (showTopBar) {
-            CenterTopAppBar(
-              title = {
-                Text(
-                  text = stringResource(id = if (isMovieScreen) R.string.title_movie else R.string.title_tvshow),
-                  style = MaterialTheme.typography.h6,
-                )
-              },
-              elevation = 0.dp,
-              actions = {
-                IconButton(onClick = {}) {
-                  Icon(
-                    painter = painterResource(id = R.drawable.ic_search),
-                    contentDescription = null
-                  )
-                }
-              }
-            )
-          } else {
-            return@Scaffold
-          }
+          if (showTopBar) AppBar(isMovieScreen = isMovieScreen)
         },
         bottomBar = { CineyBottomBar(navController = navController, tabs) }
       ) { innerPaddingModifier ->
@@ -93,4 +67,25 @@ fun CineyApp(windowSize: WindowSize, finishActivity: () -> Unit) {
       }
     }
   }
+}
+
+@Composable
+fun AppBar(isMovieScreen: Boolean) {
+  CenterTopAppBar(
+    title = {
+      Text(
+        text = stringResource(id = if (isMovieScreen) R.string.title_movie else R.string.title_tvshow),
+        style = MaterialTheme.typography.h6,
+      )
+    },
+    elevation = 0.dp,
+    actions = {
+      IconButton(onClick = {}) {
+        Icon(
+          painter = painterResource(id = R.drawable.ic_search),
+          contentDescription = null
+        )
+      }
+    }
+  )
 }

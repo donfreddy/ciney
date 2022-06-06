@@ -1,6 +1,7 @@
 package com.freddydev.ciney.di
 
 import com.freddydev.ciney.domain.repository.MovieRepository
+import com.freddydev.ciney.domain.usecase.movie.GetLatestMovieUseCase
 import com.freddydev.ciney.domain.usecase.movie.GetMoviesUseCase
 import dagger.Module
 import dagger.Provides
@@ -19,7 +20,13 @@ object UseCaseModule {
 
   @Provides
   @ViewModelScoped
-  fun provideGetMoviesUseCase (
+  fun provideGetLastMovieUseCase(movieRepository: MovieRepository): GetLatestMovieUseCase {
+    return GetLatestMovieUseCase(movieRepository)
+  }
+
+  @Provides
+  @ViewModelScoped
+  fun provideGetMoviesUseCase(
     movieRepository: MovieRepository,
   ): GetMoviesUseCase {
     return GetMoviesUseCase(movieRepos = movieRepository)

@@ -9,7 +9,7 @@ class GetMoviesUseCase @Inject constructor(
   private val movieRepos: MovieRepository,
 ) : UseCase<List<Movie>, GetMoviesUseCase.Params>() {
 
-  override suspend fun execute(params: Params): List<Movie> {
+   suspend fun execute(params: Params): List<Movie> {
     return movieRepos.getMovies(category = params.category, page = params.page)
   }
 

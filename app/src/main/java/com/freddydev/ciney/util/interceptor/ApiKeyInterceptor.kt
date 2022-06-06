@@ -7,7 +7,11 @@ import okhttp3.Response
 class ApiKeyInterceptor(private val apiKey: String) : Interceptor {
   override fun intercept(chain: Chain): Response {
     val request = chain.request()
-    val url = request.url.newBuilder().addQueryParameter(API_KEY, apiKey).build()
+    val url = request.url.newBuilder()
+      .addQueryParameter(API_KEY, apiKey)
+        // Just for testing locally
+      .addQueryParameter("language", "fr-FR")
+      .build()
     val newRequest = request.newBuilder().url(url).build()
 
     return chain.proceed(newRequest)

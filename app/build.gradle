@@ -24,7 +24,7 @@ android {
     }
 
     buildConfigField "String", "API_KEY", "\"b838b78e9e0e25b39e41a2d3b197a08f\""
-    buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/3/\""
+    buildConfigField "String", "BASE_URL", "\"https://api.themoviedb.org/\""
     buildConfigField "String", "IMAGE_BASE_URL", "\"https://image.tmdb.org/t/p/w500\""
     buildConfigField "String", "BASE_POSTER_URL", "\"https://image.tmdb.org/t/p/w342\""
     buildConfigField "String", "BASE_BACKDROP_URL", "\"https://image.tmdb.org/t/p/w780\""
