@@ -12,7 +12,7 @@ import javax.inject.Inject
 class MovieRemoteDatasourceImpl @Inject constructor(private val movieService: MovieService) :
   MovieRemoteDatasource {
 
-  override suspend fun getNowPlayingMovies(page: Int?): Response<MoviesResult> {
-    return movieService.nowPlaying(page = page)
+  override suspend fun getMovies(category: String, page: Int): Response<MoviesResult> {
+    return movieService.getMovies(category, page)
   }
 }

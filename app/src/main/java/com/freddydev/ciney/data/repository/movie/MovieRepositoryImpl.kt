@@ -16,20 +16,20 @@ class MovieRepositoryImpl constructor(
   private val movieLocalDataSource: MovieLocalDatasource,
 ) : MovieRepository {
 
-  @WorkerThread
-  override suspend fun getNowPlayingMovies(page: Int?): List<Movie> {
-    lateinit var movies: List<Movie>
-    Timber.i("### GET tNowPlayingMovies")
+  // @WorkerThread
+  override suspend fun getMovies(category: String, page: Int): List<Movie> {
+    var movies: List<Movie> = emptyList()
+    println("### GET NowPlayingMovies")
     try {
-      val response = movieRemoteDatasource.getNowPlayingMovies(page = page)
+      println("#### Start Body getNowPlayingMovies")
+      val response = movieRemoteDatasource.getMovies(category, page)
       val body = response.body()
-      Timber.i("#### Body getNowPlayingMovies")
-      Timber.i(body.toString())
+      println(body.toString())
+      println("#### End Body getNowPlayingMovies")
       if (body != null) {
         movies = body.movies
       }
     } catch (exception: Exception) {
-      Timber.i(exception.message.toString())
       exception.printStackTrace()
     }
     return movies

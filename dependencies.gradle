@@ -45,6 +45,9 @@ ext.versions = [
     // Room
     roomVersion          : '2.4.2',
 
+    // Paging https://developer.android.com/reference/kotlin/androidx/paging/compose/package-summary#collectaslazypagingitems
+    pagingVersion        : '1.0.0-alpha15',
+
     // Exoplayer
     exoplayerVersion     : '2.17.1',
 

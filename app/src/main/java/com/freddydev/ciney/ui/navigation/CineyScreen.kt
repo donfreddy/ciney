@@ -21,7 +21,7 @@ sealed class CineyScreen(val route: String) {
 sealed class MainScreens(val route: String) {
   object Movie : MainScreens("movie")
   object TvShow : MainScreens("tv")
-  object Search : MainScreens("search")
+  object Discover : MainScreens("Discover")
   object Favorite : MainScreens("favorite")
   object Profile : MainScreens("profile")
 }

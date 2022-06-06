@@ -4,8 +4,29 @@
   <!--  Bottom nav-->
   <string name="title_movie">Movies</string>
   <string name="title_tvshow">Tv Shows</string>
-  <string name="title_search">Search</string>
+  <string name="title_discover">Discover</string>
   <string name="title_profile">Profile</string>
-  <string name="title_favorites">Favorites</string>
-  <string name="title_activity_main">MainActivity</string>
+  <string name="title_favorite">Favorite</string>
+
+  <string name="title_search">Search</string>
+
+  <!--  Movie-->
+  <string name="movie_popular">Popular Movie</string>
+  <string name="movie_top_rated">Top Rated Movie</string>
+  <string name="movie_upcoming">Upcoming Movie</string>
+  <string name="movie_now_playing">Now Playing</string>
+
+  <!--  Tv Show-->
+  <string name="tvshow_popular">Popular Tv Show</string>
+  <string name="tvshow_top_rated">Top Rated Tv Show</string>
+  <string name="tvshow_upcoming">Upcoming Movie</string>
+  <string name="tvshow_now_playing">Now Playing</string>
+
+  <!--  Discover-->
+  <string name="discover_movie">Discover Movie</string>
+  <string name="discover_tvshow">Discover Tv Show</string>
+
+  <!--  Profile-->
+  <string name="profile_title">Profile</string>
+
 </resources>

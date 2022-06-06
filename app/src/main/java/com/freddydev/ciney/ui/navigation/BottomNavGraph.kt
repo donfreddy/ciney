@@ -17,6 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.freddydev.ciney.R
 import com.freddydev.ciney.ui.movie.MovieScreen
+import com.freddydev.ciney.ui.tvshow.TvShowScreen
 import com.freddydev.ciney.util.WindowSize
 
 fun NavGraphBuilder.bottomNaGraph(
@@ -34,8 +35,8 @@ fun NavGraphBuilder.bottomNaGraph(
     TvShowScreen()
   }
 
-  composable(route = BottomNavItem.Search.route) {
-    SearchScreen()
+  composable(route = BottomNavItem.Discover.route) {
+    DiscoverScreen()
   }
 
   composable(route = BottomNavItem.Favorite.route) {
@@ -52,48 +53,56 @@ sealed class BottomNavItem(
   val route: String,
   @StringRes val titleResId: Int,
   @DrawableRes val icon: Int,
+  @DrawableRes val outlineIcon: Int = icon
 ) {
   object Movie : BottomNavItem(
     route = MainScreens.Movie.route,
     titleResId = R.string.title_movie,
-    icon = R.drawable.ic_sharp_movie
+    icon = R.drawable.ic_film,
+    outlineIcon = R.drawable.ic_film_outline
   )
 
   object TvShow : BottomNavItem(
     route = MainScreens.TvShow.route,
     titleResId = R.string.title_tvshow,
-    icon = R.drawable.ic_sharp_tv
+    icon = R.drawable.ic_tv,
+    outlineIcon = R.drawable.ic_tv_outline
   )
 
-  object Search : BottomNavItem(
-    route = MainScreens.Search.route,
-    titleResId = R.string.title_search,
-    icon = R.drawable.ic_search
+  object Discover : BottomNavItem(
+    route = MainScreens.Discover.route,
+    titleResId = R.string.title_discover,
+    icon = R.drawable.ic_compass,
+    outlineIcon = R.drawable.ic_compass_outline
   )
 
   object Favorite : BottomNavItem(
     route = MainScreens.Favorite.route,
-    titleResId = R.string.title_favorites,
-    icon = R.drawable.ic_favorite
+    titleResId = R.string.title_favorite,
+    icon = R.drawable.ic_heart,
+    outlineIcon = R.drawable.ic_heart_outline
   )
 
   object Profile : BottomNavItem(
     route = MainScreens.Profile.route,
     titleResId = R.string.title_profile,
-    icon = R.drawable.ic_round_account_circle
+    icon = R.drawable.ic_round_account_circle,
+    outlineIcon = R.drawable.ic_outline_account_circle
   )
 }
 
 
+
+
 @Composable
-fun TvShowScreen() {
+fun PersonScreen() {
   Column(
     modifier = Modifier
       .fillMaxSize()
       .wrapContentSize(Alignment.Center)
   ) {
     Text(
-      text = "TvShow Screen",
+      text = "Person Screen",
       modifier = Modifier.align(Alignment.CenterHorizontally),
       textAlign = TextAlign.Center,
       style = MaterialTheme.typography.h6
@@ -103,14 +112,14 @@ fun TvShowScreen() {
 }
 
 @Composable
-fun SearchScreen() {
+fun DiscoverScreen() {
   Column(
     modifier = Modifier
       .fillMaxSize()
       .wrapContentSize(Alignment.Center)
   ) {
     Text(
-      text = "Search Screen",
+      text = "Discover Screen",
       modifier = Modifier.align(Alignment.CenterHorizontally),
       textAlign = TextAlign.Center,
       style = MaterialTheme.typography.h6

@@ -13,63 +13,55 @@ import retrofit2.http.*
  */
 interface MovieService {
 
-  /** Get the most newly created movie. */
-  @GET("/movie/latest")
-  fun latestMovie(): Response<MovieDetail?>
-
-  /** Get a list of movies in theatres. */
-  @GET("/movie/now_playing")
-  fun nowPlaying(@Query("page") page: Int? = 1): Response<MoviesResult>
-
-  /** Get a list of the current popular movies on TMDB. This list updates daily.*/
-  @GET("/movie/popular")
-  fun popular(@Query("page") page: Int): Response<MoviesResult>
-
-  /** Get the top rated movies on TMDB. */
-  @GET("/movie/top_rated")
-  fun topRated(@Query("page") page: Int): Response<MoviesResult>
-
-  /** Get a list of upcoming movies in theatres. */
-  @GET("/movie/upcoming")
-  fun upcoming(@Query("page") page: Int): Response<MoviesResult>
+  /**
+   * Get movies list by now playing, upcoming, popular or top rated.
+   * @param [category] The category of movies to get. Possible values: now_playing, upcoming, popular, top_rated.
+   * @param [page] The page of results to return. Default: 1.
+   * @return [Response] with [MoviesResult]
+   */
+  @GET("/movie/{category}")
+  suspend fun getMovies(
+    @Path("category") category: String,
+    @Query("page") page: Int
+  ): Response<MoviesResult>
 
   /** Get the primary information about a movie. */
   @GET("/movie/{movie_id}")
-  fun movieById(@Path("movie_id") id: String): Response<MovieDetail>
+  suspend fun movieById(@Path("movie_id") id: String): Response<MovieDetail>
 
   /** Get a list of similar movies. */
   @GET("/movie/{movie_id}/similar")
-  fun similar(
+  suspend fun similar(
     @Path("movie_id") id: String, @Query("page") page: Int
   ): Response<MoviesResult>
 
   /** Get a list of recommended movies for a movie. */
   @GET("/movie/{movie_id}/recommendations")
-  fun recommendations(
+  suspend fun recommendations(
     @Path("movie_id") id: String, @Query("page") page: Int
   ): Response<MoviesResult>
 
   /** Get the videos that have been added to a movie. */
   @GET("/movie/{movie_id}/videos")
-  fun movieVideos(@Path("movie_id") id: String): Response<VideosResult>
+  suspend fun movieVideos(@Path("movie_id") id: String): Response<VideosResult>
 
   /** Get the user reviews for a movie. */
   @GET("/movie/{movie_id}/reviews")
-  fun movieReviews(@Path("movie_id") id: String): Response<ReviewsResult>
+  suspend fun movieReviews(@Path("movie_id") id: String): Response<ReviewsResult>
 
   /** Get the images that belong to a movie. */
   @GET("/movie/{movie_id}/images")
-  fun movieImages(@Path("movie_id") id: String): Response<ImagesResult>
+  suspend fun movieImages(@Path("movie_id") id: String): Response<ImagesResult>
 
   /** Get the cast and crew for a movie. */
   @GET("/movie/{movie_id}/credits")
-  fun movieCredits(@Path("movie_id") id: String): Response<MoviesResult>
+  suspend fun movieCredits(@Path("movie_id") id: String): Response<MoviesResult>
 
   /** Rate a movie. */
   @POST("/movie/{movie_id/rating}")
-  fun rateMovie(@Path("movie_id") id: String): Response<MoviesResult>
+  suspend fun rateMovie(@Path("movie_id") id: String): Response<MoviesResult>
 
   /** Remove your rating for a movie. */
   @DELETE("/movie/{movie_id/rating}")
-  fun deleteRating(@Path("movie_id") id: String): Response<MoviesResult>
+  suspend fun deleteRating(@Path("movie_id") id: String): Response<MoviesResult>
 }

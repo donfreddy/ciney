@@ -1,40 +1,49 @@
 package com.freddydev.ciney.ui.movie
 
-import android.view.Surface
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.freddydev.ciney.R
+import com.freddydev.ciney.domain.model.movie.Movie
+import com.freddydev.ciney.ui.components.CenterTopAppBar
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.rememberPagerState
 
 @Composable
-fun MovieScreen(viewModel: MovieViewModel = hiltViewModel()) {
+fun MovieScreen() {
+    MovieContent()
+}
 
-  //  val movie: Movie? by viewModel.movieFlow.collectAsState(initial = null)
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun MovieContent() {
+  val movieViewModel = hiltViewModel<MovieViewModel>()
 
-  val text: String by viewModel.text.observeAsState(initial = "")
+  val movie: List<Movie>? by movieViewModel.getNowPlaying().observeAsState(initial = null)
 
-  Surface(
-    modifier = Modifier
-      .fillMaxWidth()
-      .fillMaxHeight(),
-    color = colorResource(id = R.color.blue),
-    contentColor = MaterialTheme.colors.onBackground
-  ) {
+  println("### MovieScreen: ${movie?.size}")
+
+  val text: String by movieViewModel.text.observeAsState(initial = "")
+
     Column(
       modifier = Modifier
-        .fillMaxSize()
-        .wrapContentSize(Alignment.Center)
+        .fillMaxWidth()
+        .fillMaxHeight(),
+      verticalArrangement = Arrangement.Center,
+      horizontalAlignment = Alignment.CenterHorizontally
     ) {
       Text(
         text = text,
@@ -44,5 +53,5 @@ fun MovieScreen(viewModel: MovieViewModel = hiltViewModel()) {
         style = MaterialTheme.typography.h6
       )
     }
-  }
 }
+
