@@ -30,11 +30,6 @@ class MovieViewModel @Inject constructor(
     getLatestMovie()
   }
 
-  private val _text = MutableLiveData<String>().apply {
-    value = "This is Movie Screen"
-  }
-  val text: LiveData<String> = _text
-
   /**
    * Get latest movie
    */

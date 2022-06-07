@@ -22,7 +22,7 @@ fun CineyBottomBar(navController: NavController, tabs: List<BottomNavItem>) {
   BottomNavigation(
     backgroundColor = MaterialTheme.colors.background,
     contentColor = Color.White,
-    elevation = 8.dp,
+    elevation = 12.dp,
   ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
@@ -46,7 +46,7 @@ fun CineyBottomBar(navController: NavController, tabs: List<BottomNavItem>) {
         },
         selectedContentColor = MaterialTheme.colors.primary,
         unselectedContentColor = DavyGrey,
-        alwaysShowLabel = false,
+        alwaysShowLabel = true,
         selected = isSelected,
         onClick = {
           navController.navigate(tab.route) {

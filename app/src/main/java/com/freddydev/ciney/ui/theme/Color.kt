@@ -1,13 +1,20 @@
 package com.freddydev.ciney.ui.theme
 
 import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 
 val YankeesBlue = Color(0xFF14213D)
 val DarkTangerine = Color(0xFFFCA311)
+
+
+val SunsetOrange = Color(0xFFFB5558)
+val PearlAqua = Color(0xFF77C8B2)
+val PastelOrange = Color(0xFFFFC145)
+val Jet = Color(0xFF363636)
+
+
 
 // Ciney colors
 val ChineseBlack = Color(0xFF111112)
@@ -52,5 +59,3 @@ val CineyColors = darkColors(
      onSurface = Color.Black,
    */
 )
-
-

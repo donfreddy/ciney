@@ -17,6 +17,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.freddydev.ciney.R
 import com.freddydev.ciney.ui.movie.MovieScreen
+import com.freddydev.ciney.ui.profile.ProfileScreen
 import com.freddydev.ciney.ui.tvshow.TvShowScreen
 import com.freddydev.ciney.util.WindowSize
 
@@ -144,23 +145,3 @@ fun FavoriteScreen() {
     )
   }
 }
-
-@Composable
-fun ProfileScreen() {
-  Column(
-    modifier = Modifier
-      .fillMaxSize()
-      .wrapContentSize(Alignment.Center)
-  ) {
-    Text(
-      text = "Profile Screen",
-      modifier = Modifier.align(Alignment.CenterHorizontally),
-      textAlign = TextAlign.Center,
-      style = MaterialTheme.typography.h6
-
-    )
-  }
-}
-
-
-
