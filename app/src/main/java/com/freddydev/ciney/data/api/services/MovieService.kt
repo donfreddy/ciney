@@ -3,7 +3,6 @@ package com.freddydev.ciney.data.api.services
 import com.freddydev.ciney.data.dto.movie.MovieDetailDto
 import com.freddydev.ciney.data.dto.movie.MoviesDto
 import com.freddydev.ciney.domain.model.image.ImagesResult
-import com.freddydev.ciney.domain.model.movie.MovieDetail
 import com.freddydev.ciney.domain.model.review.ReviewsResult
 import com.freddydev.ciney.domain.model.video.VideosResult
 import retrofit2.Response
@@ -16,7 +15,7 @@ interface MovieService {
 
   /** Get the most newly created movie. */
   @GET("/3/movie/latest")
-  fun latestMovie(): MovieDetailDto
+  suspend fun latestMovie(): Response<MovieDetailDto>
 
   /**
    * Get movies list by now playing, upcoming, popular or top rated.
@@ -26,47 +25,53 @@ interface MovieService {
    */
   @GET("/3/movie/{category}")
   suspend fun getMovies(
-    @Path("category") category: String,
-    @Query("page") page: Int
-  ): MoviesDto
+    @Path(CATEGORY) category: String,
+    @Query(PAGE) page: Int
+  ): Response<MoviesDto>
 
   /** Get the primary information about a movie. */
   @GET("/3/movie/{movie_id}")
-  suspend fun movieById(@Path("movie_id") id: String): Response<MovieDetail>
+  suspend fun movieById(@Path(MOVIE_ID) id: String): Response<MovieDetailDto>
 
   /** Get a list of similar movies. */
   @GET("/3/movie/{movie_id}/similar")
   suspend fun similar(
-    @Path("movie_id") id: String, @Query("page") page: Int
+    @Path(MOVIE_ID) id: String, @Query(PAGE) page: Int
   ): Response<MoviesDto>
 
   /** Get a list of recommended movies for a movie. */
   @GET("/3/movie/{movie_id}/recommendations")
   suspend fun recommendations(
-    @Path("movie_id") id: String, @Query("page") page: Int
+    @Path(MOVIE_ID) id: String, @Query(PAGE) page: Int
   ): Response<MoviesDto>
 
   /** Get the videos that have been added to a movie. */
   @GET("/3/movie/{movie_id}/videos")
-  suspend fun movieVideos(@Path("movie_id") id: String): Response<VideosResult>
+  suspend fun movieVideos(@Path(MOVIE_ID) id: String): Response<VideosResult>
 
   /** Get the user reviews for a movie. */
   @GET("/3/movie/{movie_id}/reviews")
-  suspend fun movieReviews(@Path("movie_id") id: String): Response<ReviewsResult>
+  suspend fun movieReviews(@Path(MOVIE_ID) id: String): Response<ReviewsResult>
 
   /** Get the images that belong to a movie. */
   @GET("/3/movie/{movie_id}/images")
-  suspend fun movieImages(@Path("movie_id") id: String): Response<ImagesResult>
+  suspend fun movieImages(@Path(MOVIE_ID) id: String): Response<ImagesResult>
 
   /** Get the cast and crew for a movie. */
   @GET("/3/movie/{movie_id}/credits")
-  suspend fun movieCredits(@Path("movie_id") id: String): Response<MoviesDto>
+  suspend fun movieCredits(@Path(MOVIE_ID) id: String): Response<MoviesDto>
 
   /** Rate a movie. */
   @POST("/3/movie/{movie_id/rating}")
-  suspend fun rateMovie(@Path("movie_id") id: String): Response<MoviesDto>
+  suspend fun rateMovie(@Path(MOVIE_ID) id: String): Response<MoviesDto>
 
   /** Remove your rating for a movie. */
   @DELETE("/3/movie/{movie_id/rating}")
-  suspend fun deleteRating(@Path("movie_id") id: String): Response<MoviesDto>
+  suspend fun deleteRating(@Path(MOVIE_ID) id: String): Response<MoviesDto>
+
+  companion object {
+    const val PAGE = "page"
+    const val CATEGORY = "category"
+    private const val MOVIE_ID = "movie_id"
+  }
 }

@@ -4,6 +4,9 @@ import com.freddydev.ciney.data.api.services.MovieService
 import com.freddydev.ciney.data.dto.movie.MovieDetailDto
 import com.freddydev.ciney.data.dto.movie.MoviesDto
 import com.freddydev.ciney.data.repository.movie.datasource.MovieRemoteDatasource
+import com.freddydev.ciney.domain.model.movie.MovieDetail
+import com.freddydev.ciney.util.Resource
+import retrofit2.Response
 import javax.inject.Inject
 
 /**
@@ -12,11 +15,11 @@ import javax.inject.Inject
 class MovieRemoteDatasourceImpl @Inject constructor(private val movieService: MovieService) :
   MovieRemoteDatasource {
 
-  override suspend fun getLatestMovie(): MovieDetailDto {
+  override suspend fun getLatestMovie(): Response<MovieDetailDto> {
     return movieService.latestMovie()
   }
 
-  override suspend fun getMovies(category: String, page: Int): List<MoviesDto> {
+  override suspend fun getMovies(category: String, page: Int): Response<MoviesDto> {
     return movieService.getMovies(category, page)
   }
 }

@@ -1,15 +1,21 @@
 package com.freddydev.ciney.data.repository.movie
 
 import androidx.annotation.WorkerThread
-import com.freddydev.ciney.data.dto.movie.MovieDetailDto
+import com.freddydev.ciney.data.dto.movie.toMovieDetail
+import com.freddydev.ciney.data.dto.movie.toMovies
 import com.freddydev.ciney.data.repository.movie.datasource.MovieLocalDatasource
 import com.freddydev.ciney.data.repository.movie.datasource.MovieRemoteDatasource
 import com.freddydev.ciney.domain.model.movie.Movie
+import com.freddydev.ciney.domain.model.movie.MovieDetail
+import com.freddydev.ciney.domain.model.movie.Movies
 import com.freddydev.ciney.domain.repository.MovieRepository
-import kotlinx.coroutines.Dispatchers
+import com.freddydev.ciney.util.Constants.HTTP_EXCEPT_MSG
+import com.freddydev.ciney.util.Constants.IO_EXCEPT_MSG
+import com.freddydev.ciney.util.Resource
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onCompletion
+import retrofit2.HttpException
+import java.io.IOException
 
 /**
  * This class is a implementation of [MovieRepository]
@@ -20,25 +26,39 @@ class MovieRepositoryImpl constructor(
 ) : MovieRepository {
 
   @WorkerThread
-  override fun getLatestMovie(
-
-  ): MovieDetailDto {
-
+  override fun getLatestMovie(): Flow<Resource<MovieDetail>> = flow {
+    try {
+      emit(Resource.Loading())
+      val movieDetailDto = movieRemoteDatasource.getLatestMovie().body()
+      if (movieDetailDto != null) {
+        emit(Resource.Success(movieDetailDto.toMovieDetail()))
+      }
+    } catch (e: HttpException) {
+      emit(Resource.Error(message = HTTP_EXCEPT_MSG))
+    } catch (e: IOException) {
+      /**
+       * Todo: Get data from [movieLocalDataSource] if no connexion.
+       */
+      emit(Resource.Error(message = IO_EXCEPT_MSG))
+    }
   }
 
   @WorkerThread
-  override suspend fun getMovies(category: String, page: Int): List<Movie> {
-    var movies: List<Movie> = emptyList()
-
-//    try {
-//      val response = movieRemoteDatasource.getMovies(category, page)
-//      val body = response.body()
-//      if (body != null) {
-//        movies = body.movies
-//      }
-//    } catch (exception: Exception) {
-//      exception.printStackTrace()
-//    }
-    return movies
+  override fun getMovies(category: String, page: Int): Flow<Resource<List<Movie>>> = flow {
+    try {
+      emit(Resource.Loading())
+      val moviesDto = movieRemoteDatasource.getMovies(category, page).body()
+      if (moviesDto != null) {
+        val movies: List<Movie> = moviesDto.toMovies().movies
+        emit(Resource.Success(movies))
+      }
+    } catch (e: HttpException) {
+      emit(Resource.Error(message = HTTP_EXCEPT_MSG))
+    } catch (e: IOException) {
+      /**
+       * Todo: Get data from [movieLocalDataSource] if no connexion.
+       */
+      emit(Resource.Error(message = IO_EXCEPT_MSG))
+    }
   }
 }

@@ -38,7 +38,6 @@ fun MovieDetailDto.toMovieDetail() = MovieDetail(
   id = id,
   title = title,
   backdrop_path = backdrop_path,
-  belongs_to_collection = belongs_to_collection,
   budget = budget,
   genres = genres,
   homepage = homepage,
