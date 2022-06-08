@@ -3,6 +3,7 @@
   <string name="app_name">Ciney</string>
 
   <!--  Bottom nav-->
+  <string name="title_home">Acceuil</string>
   <string name="title_movie">Films</string>
   <string name="title_tvshow">Séries</string>
   <string name="title_discover">Découvrir</string>

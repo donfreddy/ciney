@@ -1,15 +1,18 @@
 package com.freddydev.ciney.ui.profile
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -20,15 +23,16 @@ import com.freddydev.ciney.ui.theme.DavyGrey
 
 @Composable
 fun ProfileScreen() {
-  val name = rememberScrollState()
-  Column(
-    modifier = Modifier.verticalScroll(state = name)
+  val listState = rememberLazyListState()
+
+  LazyColumn(
+    state = listState
   ) {
-    ProfileSection()
-    Spacer(modifier = Modifier.height(20.dp))
-    EditProfileButton(modifier = Modifier, onClick = {})
-    Spacer(modifier = Modifier.height(30.dp))
-    ProfileRowSection()
+    item { ProfileSection() }
+    item { Spacer(modifier = Modifier.height(20.dp)) }
+    item { EditProfileButton(modifier = Modifier, onClick = {}) }
+    item { Spacer(modifier = Modifier.height(20.dp)) }
+    item { ProfileRowSection() }
   }
 }
 
@@ -96,7 +100,7 @@ fun EditProfileButton(
     {
       Icon(
         painter = painterResource(id = R.drawable.ic_edit),
-        contentDescription = ""
+        contentDescription = null
       )
       Spacer(modifier = Modifier.width(4.dp))
       Text(text = "Edit profile", style = MaterialTheme.typography.button)
@@ -162,9 +166,10 @@ fun ProfileStat(
 fun ProfileRowSection(modifier: Modifier = Modifier) {
   Column()
   {
+    ProfileRow(title = "Favorites", icon = R.drawable.ic_heart, onTap = {})
     ProfileRow(title = "Ratings", icon = R.drawable.ic_star, onTap = {})
-    ProfileRow(title = "Watchlist", icon = R.drawable.ic_bookmark, onTap = {})
     ProfileRow(title = "lists", icon = R.drawable.ic_list, onTap = {})
+    ProfileRow(title = "Watchlist", icon = R.drawable.ic_bookmark, onTap = {})
     ProfileRow(title = "Settings", icon = R.drawable.ic_settings, onTap = {})
   }
 }

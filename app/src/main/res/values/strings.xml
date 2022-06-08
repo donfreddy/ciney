@@ -2,6 +2,7 @@
   <string name="app_name">Ciney</string>
 
   <!--  Bottom nav-->
+  <string name="title_home">Home</string>
   <string name="title_movie">Movies</string>
   <string name="title_tvshow">Tv Shows</string>
   <string name="title_discover">Discover</string>
@@ -28,5 +29,6 @@
 
   <!--  Profile-->
   <string name="profile_title">Profile</string>
+  <string name="text_search" />
 
 </resources>

@@ -1,8 +1,14 @@
 package com.freddydev.ciney.util
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
+
 
 object DateTime {
 
@@ -23,6 +29,13 @@ object DateTime {
 
   fun getShortDate(date: String): String {
     return formatDate(date, "dd MMMM yyyy")
+  }
+
+  @RequiresApi(Build.VERSION_CODES.O)
+  fun getCurrentDate(): String {
+    val current = LocalDateTime.now()
+    val formatter = DateTimeFormatter.ofPattern("EEE, dd MMMM", Locale.getDefault())
+    return current.format(formatter)
   }
 
   fun getLongDate(date: String): String {

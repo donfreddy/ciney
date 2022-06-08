@@ -25,7 +25,7 @@ fun CineyNavGraph(
     // Main screens (movie, tv, search, settings)
     navigation(
       route = CineyScreen.Main.route,
-      startDestination = MainScreens.Profile.route,
+      startDestination = MainScreens.Home.route,
     ) {
       bottomNaGraph(
         navController = navController,

@@ -35,10 +35,10 @@ fun CineyApp(windowSize: WindowSize, finishActivity: () -> Unit) {
 
       val tabs = remember {
         listOf(
+          BottomNavItem.Home,
           BottomNavItem.Movie,
           BottomNavItem.TvShow,
           BottomNavItem.Discover,
-          BottomNavItem.Favorite,
           BottomNavItem.Profile
         )
       }

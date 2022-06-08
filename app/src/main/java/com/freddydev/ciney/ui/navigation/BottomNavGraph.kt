@@ -16,6 +16,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.freddydev.ciney.R
+import com.freddydev.ciney.ui.home.HomeScreen
 import com.freddydev.ciney.ui.movie.MovieScreen
 import com.freddydev.ciney.ui.profile.ProfileScreen
 import com.freddydev.ciney.ui.tvshow.TvShowScreen
@@ -28,6 +29,10 @@ fun NavGraphBuilder.bottomNaGraph(
   onSelected: (Long, NavBackStackEntry) -> Unit = { _, _ -> }
 ) {
 
+  composable(route = BottomNavItem.Home.route) {
+    HomeScreen()
+  }
+
   composable(route = BottomNavItem.Movie.route) {
     MovieScreen()
   }
@@ -38,10 +43,6 @@ fun NavGraphBuilder.bottomNaGraph(
 
   composable(route = BottomNavItem.Discover.route) {
     DiscoverScreen()
-  }
-
-  composable(route = BottomNavItem.Favorite.route) {
-    FavoriteScreen()
   }
 
   composable(route = BottomNavItem.Profile.route) {
@@ -56,6 +57,14 @@ sealed class BottomNavItem(
   @DrawableRes val icon: Int,
   @DrawableRes val outlineIcon: Int = icon
 ) {
+
+  object Home : BottomNavItem(
+    route = MainScreens.Home.route,
+    titleResId = R.string.title_home,
+    icon = R.drawable.ic_home,
+    outlineIcon = R.drawable.ic_home_outline
+  )
+
   object Movie : BottomNavItem(
     route = MainScreens.Movie.route,
     titleResId = R.string.title_movie,
@@ -77,13 +86,6 @@ sealed class BottomNavItem(
     outlineIcon = R.drawable.ic_compass_outline
   )
 
-  object Favorite : BottomNavItem(
-    route = MainScreens.Favorite.route,
-    titleResId = R.string.title_favorite,
-    icon = R.drawable.ic_heart,
-    outlineIcon = R.drawable.ic_heart_outline
-  )
-
   object Profile : BottomNavItem(
     route = MainScreens.Profile.route,
     titleResId = R.string.title_profile,
@@ -91,8 +93,6 @@ sealed class BottomNavItem(
     outlineIcon = R.drawable.ic_outline_account_circle
   )
 }
-
-
 
 
 @Composable
@@ -104,6 +104,23 @@ fun PersonScreen() {
   ) {
     Text(
       text = "Person Screen",
+      modifier = Modifier.align(Alignment.CenterHorizontally),
+      textAlign = TextAlign.Center,
+      style = MaterialTheme.typography.h6
+
+    )
+  }
+}
+
+@Composable
+fun SearchScreen() {
+  Column(
+    modifier = Modifier
+      .fillMaxSize()
+      .wrapContentSize(Alignment.Center)
+  ) {
+    Text(
+      text = "Search Screen",
       modifier = Modifier.align(Alignment.CenterHorizontally),
       textAlign = TextAlign.Center,
       style = MaterialTheme.typography.h6
