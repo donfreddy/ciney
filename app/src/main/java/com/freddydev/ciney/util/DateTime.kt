@@ -19,7 +19,7 @@ object DateTime {
 
     try {
       val oldDate = old.parse(date)!!
-      val newFormat = SimpleDateFormat(format)
+      val newFormat = SimpleDateFormat(format, Locale.getDefault())
       result = newFormat.format(oldDate)
     } catch (e: ParseException) {
       e.printStackTrace()
@@ -28,7 +28,7 @@ object DateTime {
   }
 
   fun getShortDate(date: String): String {
-    return formatDate(date, "dd MMMM yyyy")
+    return formatDate(date, "MMM dd, yyyy")
   }
 
   @RequiresApi(Build.VERSION_CODES.O)

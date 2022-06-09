@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.freddydev.ciney.data.database.CineyDatabase
 import com.freddydev.ciney.data.database.dao.MovieDao
+import com.freddydev.ciney.data.database.dao.TrendingDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +22,12 @@ object DataBaseModule {
     return Room.databaseBuilder(context, CineyDatabase::class.java, "Ciney.db")
       .allowMainThreadQueries()
       .build()
+  }
+
+  @Singleton
+  @Provides
+  fun provideTrendingDao(cineyDatabase: CineyDatabase): TrendingDao {
+    return cineyDatabase.trendingDao()
   }
 
   @Singleton

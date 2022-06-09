@@ -7,7 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
 
-  fun getLatestMovie(): Flow<Resource<MovieDetail>>
-
   fun getMovies(category: String, page: Int): Flow<Resource<List<Movie>>>
 }

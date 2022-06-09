@@ -9,6 +9,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -39,14 +40,13 @@ fun CineyBottomBar(navController: NavController, tabs: List<BottomNavItem>) {
         label = {
           Text(
             text = stringResource(id = tab.titleResId),
-
-            fontWeight = FontWeight.Bold,
+            fontSize = 11.sp,
             softWrap = false
           )
         },
         selectedContentColor = MaterialTheme.colors.primary,
         unselectedContentColor = DavyGrey,
-        alwaysShowLabel = true,
+        alwaysShowLabel = false,
         selected = isSelected,
         onClick = {
           navController.navigate(tab.route) {

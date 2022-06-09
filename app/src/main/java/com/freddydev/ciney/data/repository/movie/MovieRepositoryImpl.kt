@@ -26,30 +26,15 @@ class MovieRepositoryImpl constructor(
 ) : MovieRepository {
 
   @WorkerThread
-  override fun getLatestMovie(): Flow<Resource<MovieDetail>> = flow {
-    try {
-      emit(Resource.Loading())
-      val movieDetailDto = movieRemoteDatasource.getLatestMovie().body()
-      if (movieDetailDto != null) {
-        emit(Resource.Success(movieDetailDto.toMovieDetail()))
-      }
-    } catch (e: HttpException) {
-      emit(Resource.Error(message = HTTP_EXCEPT_MSG))
-    } catch (e: IOException) {
-      /**
-       * Todo: Get data from [movieLocalDataSource] if no connexion.
-       */
-      emit(Resource.Error(message = IO_EXCEPT_MSG))
-    }
-  }
-
-  @WorkerThread
   override fun getMovies(category: String, page: Int): Flow<Resource<List<Movie>>> = flow {
     try {
       emit(Resource.Loading())
-      val moviesDto = movieRemoteDatasource.getMovies(category, page).body()
-      if (moviesDto != null) {
-        val movies: List<Movie> = moviesDto.toMovies().movies
+      val responseBody = movieRemoteDatasource.getMovies(category, page).body()
+      if (responseBody != null) {
+        val movies: List<Movie> = responseBody.toMovies().movies
+
+        // Todo: Save movies in local database
+
         emit(Resource.Success(movies))
       }
     } catch (e: HttpException) {

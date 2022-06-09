@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -15,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.freddydev.ciney.ui.components.MovieCard
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @Composable
@@ -26,7 +29,7 @@ fun MovieScreen() {
 @Composable
 fun MovieContent() {
   val movieViewModel = hiltViewModel<MovieViewModel>()
-  val latestMovieState = movieViewModel.latestMovieState.value
+  val popularMoviesState = movieViewModel.popularMoviesState.value
 
   Column(
     modifier = Modifier
@@ -35,23 +38,21 @@ fun MovieContent() {
     verticalArrangement = Arrangement.Center,
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
-    if (latestMovieState.isLoading) {
+    if (popularMoviesState.isLoading) {
       CircularProgressIndicator(modifier = Modifier.align(alignment = Alignment.CenterHorizontally))
     }
 
-    latestMovieState.movie?.let { movie ->
-      Text(
-        text = movie.original_title,
-        modifier = Modifier.align(Alignment.CenterHorizontally),
-        textAlign = TextAlign.Center,
-        color = Color.White,
-        style = MaterialTheme.typography.h6
-      )
+    popularMoviesState.movies?.let { movies ->
+      LazyRow {
+        items(movies.size) { index ->
+          MovieCard(movie = movies[index], selectPoster = {})
+        }
+      }
     }
 
-    if (latestMovieState.error.isNotBlank()) {
+    if (popularMoviesState.error.isNotBlank()) {
       Text(
-        text = latestMovieState.error,
+        text = popularMoviesState.error,
         modifier = Modifier.align(Alignment.CenterHorizontally),
         textAlign = TextAlign.Center,
         color = Color.Red,

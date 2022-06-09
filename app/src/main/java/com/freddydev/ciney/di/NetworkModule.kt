@@ -4,6 +4,7 @@ import com.freddydev.ciney.util.interceptor.ApiKeyInterceptor
 import com.google.gson.Gson
 import com.freddydev.ciney.BuildConfig
 import com.freddydev.ciney.data.api.services.MovieService
+import com.freddydev.ciney.data.api.services.TrendingService
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -54,6 +55,12 @@ object NetworkModule {
       .baseUrl(BuildConfig.BASE_URL)
       .addConverterFactory(GsonConverterFactory.create(gson))
       .build()
+  }
+
+  @Provides
+  @Singleton
+  fun provideTrendingService(retrofit: Retrofit): TrendingService {
+    return retrofit.create(TrendingService::class.java)
   }
 
   @Provides

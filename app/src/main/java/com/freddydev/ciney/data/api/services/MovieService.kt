@@ -13,15 +13,8 @@ import retrofit2.http.*
  */
 interface MovieService {
 
-  /** Get the most newly created movie. */
-  @GET("/3/movie/latest")
-  suspend fun latestMovie(): Response<MovieDetailDto>
-
   /**
    * Get movies list by now playing, upcoming, popular or top rated.
-   * @param [category] The category of movies to get. Possible values: now_playing, upcoming, popular, top_rated.
-   * @param [page] The page of results to return. Default: 1.
-   * @return [Response] with [MoviesDto]
    */
   @GET("/3/movie/{category}")
   suspend fun getMovies(
