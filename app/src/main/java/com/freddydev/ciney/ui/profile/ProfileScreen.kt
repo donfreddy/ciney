@@ -1,9 +1,7 @@
 package com.freddydev.ciney.ui.profile
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -20,19 +18,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.freddydev.ciney.R
 import com.freddydev.ciney.ui.theme.DavyGrey
+import com.google.accompanist.insets.navigationBarsHeight
+import com.google.accompanist.insets.statusBarsPadding
 
 @Composable
-fun ProfileScreen() {
-  val listState = rememberLazyListState()
+fun ProfileScreen(
+  modifier: Modifier = Modifier,
+) {
+  val scrollState = rememberScrollState()
 
-  LazyColumn(
-    state = listState
+  Column(
+    modifier = modifier
+      .verticalScroll(scrollState)
+      .statusBarsPadding()
   ) {
-    item { ProfileSection() }
-    item { Spacer(modifier = Modifier.height(20.dp)) }
-    item { EditProfileButton(modifier = Modifier, onClick = {}) }
-    item { Spacer(modifier = Modifier.height(20.dp)) }
-    item { ProfileRowSection() }
+    ProfileSection()
+    Spacer(modifier = Modifier.height(20.dp))
+    EditProfileButton(modifier = Modifier, onClick = {})
+    Spacer(modifier = Modifier.height(20.dp))
+    ProfileRowSection()
+    Spacer(Modifier.navigationBarsHeight(additional = 56.dp))
   }
 }
 
@@ -41,7 +46,7 @@ fun ProfileSection() {
   Column(
     modifier = Modifier
       .fillMaxWidth()
-      .padding(top = 40.dp),
+      .padding(top = 20.dp),
     verticalArrangement = Arrangement.Center,
     horizontalAlignment = Alignment.CenterHorizontally
   ) {

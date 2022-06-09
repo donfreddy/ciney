@@ -83,9 +83,9 @@ dependencies {
   implementation "androidx.compose.material:material:$compose_version"
   implementation "androidx.compose.animation:animation:$compose_version"
   implementation "androidx.compose.foundation:foundation:$compose_version"
+  implementation "androidx.compose.foundation:foundation-layout:$compose_version"
   implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
   implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
-  implementation "androidx.compose.foundation:foundation-layout:$compose_version"
   implementation "androidx.compose.material:material-icons-extended:$compose_version"
 
   // Lifecycle
@@ -138,6 +138,12 @@ dependencies {
 
   // Coil
   implementation "io.coil-kt:coil-compose:$coil_version"
+
+  // Exoplayer
+  implementation "com.google.android.exoplayer:exoplayer:$versions.exoplayerVersion"
+  implementation "com.google.android.exoplayer:exoplayer-core:$versions.exoplayerVersion"
+  implementation "com.google.android.exoplayer:exoplayer-dash:$versions.exoplayerVersion"
+  implementation "com.google.android.exoplayer:exoplayer-ui:$versions.exoplayerVersion"
 
   //Timber
   implementation "com.jakewharton.timber:timber:$timber_version"

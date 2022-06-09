@@ -1,5 +1,7 @@
 package com.freddydev.ciney.ui.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -8,13 +10,13 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.freddydev.ciney.util.WindowSize
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CineyNavGraph(
   modifier: Modifier = Modifier,
   navController: NavHostController = rememberNavController(),
   windowSize: WindowSize,
   startDestination: String = CineyScreen.Main.route,
-  finishActivity: () -> Unit = {},
 ) {
   NavHost(
     navController = navController,

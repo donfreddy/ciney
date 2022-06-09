@@ -1,6 +1,8 @@
 package com.freddydev.ciney.ui.navigation
 
+import android.os.Build
 import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +24,7 @@ import com.freddydev.ciney.ui.profile.ProfileScreen
 import com.freddydev.ciney.ui.tvshow.TvShowScreen
 import com.freddydev.ciney.util.WindowSize
 
+@RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.bottomNaGraph(
   navController: NavHostController,
   modifier: Modifier = Modifier,

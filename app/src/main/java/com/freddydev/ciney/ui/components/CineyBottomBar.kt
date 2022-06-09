@@ -1,8 +1,10 @@
 package com.freddydev.ciney.ui.components
 
 import androidx.compose.material.*
+import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -16,6 +18,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.freddydev.ciney.R
 import com.freddydev.ciney.ui.navigation.BottomNavItem
 import com.freddydev.ciney.ui.theme.DavyGrey
+import com.google.accompanist.insets.*
 
 @Composable
 fun CineyBottomBar(navController: NavController, tabs: List<BottomNavItem>) {

@@ -2,13 +2,13 @@ package com.freddydev.ciney.ui.home
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -32,23 +32,37 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.freddydev.ciney.R
-import com.freddydev.ciney.domain.model.movie.Movie
-import com.freddydev.ciney.ui.components.MovieCard
 import com.freddydev.ciney.ui.home.components.TrendingCard
 import com.freddydev.ciney.ui.profile.RoundImage
 import com.freddydev.ciney.ui.theme.DavyGrey
+import com.freddydev.ciney.ui.theme.PearlAqua
+import com.freddydev.ciney.ui.theme.SunsetOrange
+import com.freddydev.ciney.util.ConnectionState
 import com.freddydev.ciney.util.DateTime.getCurrentDate
+import com.freddydev.ciney.util.connectivityState
+import com.google.accompanist.insets.navigationBarsHeight
+import com.google.accompanist.insets.statusBarsPadding
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 
+@OptIn(ExperimentalCoroutinesApi::class, ExperimentalAnimationApi::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
+fun HomeScreen(
+  modifier: Modifier = Modifier,
+  homeViewModel: HomeViewModel = hiltViewModel(),
+) {
   var search by remember { mutableStateOf("") }
   val listState = rememberLazyListState()
   val trendingState = homeViewModel.trendingState.value
 
   LazyColumn(
-    state = listState
+    modifier = modifier,
   ) {
+
+    item {
+      Spacer(Modifier.statusBarsPadding())
+    }
 
     item {
       TopAppBar(
@@ -79,6 +93,9 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
         }
       }
     }
+    item {
+      ConnectivityStatus()
+    }
     item { Spacer(modifier = Modifier.height(20.dp)) }
 
     item {
@@ -99,7 +116,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
 
       trendingState.trending?.let { trending ->
         Column() {
-          RowTitle(title = "Trending Today")
+          RowTitle(title = "Popular in Theaters")
           LazyRow() {
             items(trending.size) { index ->
               TrendingCard(trending = trending[index], selectPoster = {})
@@ -127,7 +144,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
 
       trendingState.trending?.let { trending ->
         Column() {
-          RowTitle(title = "What's Popular on TV")
+          RowTitle(title = "Popular on TV")
           LazyRow() {
             items(trending.size) { index ->
               TrendingCard(trending = trending[index], selectPoster = {})
@@ -145,7 +162,37 @@ fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
         )
       }
     }
+
     // Trending Today/This Week
+    item() {
+      if (trendingState.isLoading) {
+        CircularProgressIndicator(modifier = Modifier)
+      }
+
+      trendingState.trending?.let { trending ->
+        Column() {
+          RowTitle(title = "Trending Today")
+          LazyRow() {
+            items(trending.size) { index ->
+              TrendingCard(trending = trending[index], selectPoster = {})
+            }
+          }
+        }
+      }
+
+      if (trendingState.error.isNotBlank()) {
+        Text(
+          text = trendingState.error,
+          textAlign = TextAlign.Center,
+          color = Color.Red,
+          style = MaterialTheme.typography.h6
+        )
+      }
+    }
+
+    item {
+      Spacer(Modifier.navigationBarsHeight(additional = 56.dp))
+    }
   }
 }
 
@@ -227,4 +274,66 @@ fun TextInputField(label: String, value: String, onValueChanged: (String) -> Uni
       }
     )
   )
+}
+
+@Composable
+fun ConnectivityStatusBox(
+  isConnected: Boolean
+) {
+  val backgroundColor by animateColorAsState(targetValue = if (isConnected) PearlAqua else SunsetOrange)
+  val message = if (isConnected) "Back Online!" else "No Internet Connection!"
+  val iconResource = if (isConnected) {
+    R.drawable.ic_info
+  } else {
+    R.drawable.ic_alert_triangle
+  }
+  Box(
+    modifier = Modifier
+      .background(backgroundColor)
+      .fillMaxWidth()
+      .padding(8.dp),
+    contentAlignment = Alignment.Center
+  ) {
+    Row(
+      verticalAlignment = Alignment.CenterVertically
+    ) {
+      Icon(
+        painter = painterResource(id = iconResource),
+        contentDescription = "Connection Image",
+        tint = Color.White
+      )
+      Spacer(modifier = Modifier.size(8.dp))
+      Text(
+        text = message,
+        color = Color.White,
+        fontSize = 15.sp
+      )
+    }
+  }
+}
+
+@ExperimentalAnimationApi
+@ExperimentalCoroutinesApi
+@Composable
+fun ConnectivityStatus() {
+  val connection by connectivityState()
+  val isConnected = connection == ConnectionState.Available
+  var visibility by remember { mutableStateOf(false) }
+
+  AnimatedVisibility(
+    visible = visibility,
+    enter = expandVertically(),
+    exit = shrinkVertically()
+  ) {
+    ConnectivityStatusBox(isConnected = isConnected)
+  }
+
+  LaunchedEffect(isConnected) {
+    visibility = if (!isConnected) {
+      true
+    } else {
+      delay(2000)
+      false
+    }
+  }
 }
