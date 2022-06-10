@@ -11,8 +11,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -25,6 +27,7 @@ import com.freddydev.ciney.domain.model.movie.Movie
 import com.freddydev.ciney.domain.model.trending.Trending
 import com.freddydev.ciney.ui.theme.DavyGrey
 import com.freddydev.ciney.util.DateTime.getShortDate
+import com.skydoves.landscapist.coil.CoilImage
 
 @Composable
 fun TrendingCard(
@@ -49,6 +52,22 @@ fun TrendingCard(
         )
         .clickable { selectPoster(trending.id) }
     )
+
+
+//    CoilImage(
+//      imageModel = BASE_POSTER_URL + trending.poster_path,
+//      contentScale = ContentScale.Crop,
+//      // placeHolder = ImageBitmap.imageResource(R.drawable.ic_info),
+//     //  error = ImageBitmap.imageResource(R.drawable.ic_alert_triangle),
+//      modifier = Modifier
+//        .aspectRatio(2 / 3f, matchHeightConstraintsFirst = true)
+//        .clip(
+//          RoundedCornerShape(corner = CornerSize((10.dp)))
+//        )
+//        .clickable { selectPoster(trending.id) }
+//    )
+
+
 //    Text(
 //      text = trending.name ?: trending.original_name ?: trending.title ?: trending.original_title
 //      ?: "",

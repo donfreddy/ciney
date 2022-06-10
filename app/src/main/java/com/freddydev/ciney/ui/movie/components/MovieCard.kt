@@ -1,8 +1,10 @@
-package com.freddydev.ciney.ui.components
+package com.freddydev.ciney.ui.movie.components
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -22,8 +24,9 @@ fun MovieCard(
   modifier: Modifier = Modifier,
   selectPoster: (Int) -> Unit,
 ) {
-  Column(
-    modifier = modifier.clickable { selectPoster(movie.id) }
+  Box(
+    modifier = modifier
+      .padding(horizontal = 4.dp)
   ) {
 
     AsyncImage(
@@ -32,8 +35,11 @@ fun MovieCard(
       contentDescription = "Poster",
       contentScale = ContentScale.Crop,
       modifier = Modifier
-        .aspectRatio(2 / 3f)
-        .clip(RoundedCornerShape(corner = CornerSize((16.dp))))
+        .aspectRatio(2 / 3f, matchHeightConstraintsFirst = true)
+        .clip(
+          RoundedCornerShape(corner = CornerSize((10.dp)))
+        )
+        .clickable { selectPoster(movie.id) }
     )
   }
 }

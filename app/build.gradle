@@ -138,6 +138,7 @@ dependencies {
 
   // Coil
   implementation "io.coil-kt:coil-compose:$coil_version"
+  implementation "com.github.skydoves:landscapist-coil:$versions.landscapistVersion"
 
   // Exoplayer
   implementation "com.google.android.exoplayer:exoplayer:$versions.exoplayerVersion"

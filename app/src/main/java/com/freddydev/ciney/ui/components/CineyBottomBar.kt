@@ -1,5 +1,6 @@
 package com.freddydev.ciney.ui.components
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
 import androidx.compose.material.SnackbarDefaults.backgroundColor
 import androidx.compose.runtime.Composable
@@ -27,6 +28,7 @@ fun CineyBottomBar(navController: NavController, tabs: List<BottomNavItem>) {
     backgroundColor = MaterialTheme.colors.background,
     contentColor = Color.White,
     elevation = 12.dp,
+    modifier = Modifier.systemBarsPadding()
   ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination

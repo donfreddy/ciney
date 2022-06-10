@@ -13,7 +13,6 @@ import com.freddydev.ciney.util.WindowSize
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CineyNavGraph(
-  modifier: Modifier = Modifier,
   navController: NavHostController = rememberNavController(),
   windowSize: WindowSize,
   startDestination: String = CineyScreen.Main.route,
@@ -32,7 +31,6 @@ fun CineyNavGraph(
       bottomNaGraph(
         navController = navController,
         windowSize = windowSize,
-        modifier = modifier,
       )
     }
 

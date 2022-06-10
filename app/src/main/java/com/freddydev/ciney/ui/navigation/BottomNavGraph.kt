@@ -27,7 +27,6 @@ import com.freddydev.ciney.util.WindowSize
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.bottomNaGraph(
   navController: NavHostController,
-  modifier: Modifier = Modifier,
   windowSize: WindowSize,
   onSelected: (Long, NavBackStackEntry) -> Unit = { _, _ -> }
 ) {
