@@ -18,4 +18,8 @@ class MovieRemoteDatasourceImpl @Inject constructor(private val movieService: Mo
   override suspend fun getMovies(category: String, page: Int): Response<MoviesDto> {
     return movieService.getMovies(category, page)
   }
+
+  override suspend fun getMovieDetail(movieId: Int): Response<MovieDetailDto> {
+    return movieService.getMovieDetail(id = movieId)
+  }
 }

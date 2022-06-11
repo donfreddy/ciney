@@ -1,5 +1,6 @@
 package com.freddydev.ciney.ui.movie
 
+import com.freddydev.ciney.domain.model.movie.Movie
 import com.freddydev.ciney.domain.model.movie.MovieDetail
 
 data class MovieDetailState(

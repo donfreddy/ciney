@@ -22,9 +22,9 @@ interface MovieService {
     @Query(PAGE) page: Int
   ): Response<MoviesDto>
 
-  /** Get the primary information about a movie. */
+  /** Get movie details by id. */
   @GET("/3/movie/{movie_id}")
-  suspend fun movieById(@Path(MOVIE_ID) id: String): Response<MovieDetailDto>
+  suspend fun getMovieDetail(@Path(MOVIE_ID) id: Int): Response<MovieDetailDto>
 
   /** Get a list of similar movies. */
   @GET("/3/movie/{movie_id}/similar")

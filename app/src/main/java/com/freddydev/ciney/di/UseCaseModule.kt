@@ -2,6 +2,7 @@ package com.freddydev.ciney.di
 
 import com.freddydev.ciney.domain.repository.MovieRepository
 import com.freddydev.ciney.domain.repository.TrendingRepository
+import com.freddydev.ciney.domain.usecase.movie.GetMovieDetailUseCase
 import com.freddydev.ciney.domain.usecase.movie.GetMoviesUseCase
 import com.freddydev.ciney.domain.usecase.trending.GetTrendingUseCase
 import dagger.Module
@@ -16,16 +17,6 @@ import dagger.hilt.android.scopes.ViewModelScoped
 object UseCaseModule {
 
   // -------------------
-  // TRENDING ITEMS
-  // -------------------
-
-  @Provides
-  @ViewModelScoped
-  fun provideGetTrendingUseCase(trendingRepository: TrendingRepository): GetTrendingUseCase {
-    return GetTrendingUseCase(trendingRepos = trendingRepository)
-  }
-
-  // -------------------
   // MOVIES
   // -------------------
 
@@ -35,5 +26,27 @@ object UseCaseModule {
     movieRepository: MovieRepository,
   ): GetMoviesUseCase {
     return GetMoviesUseCase(movieRepos = movieRepository)
+  }
+
+  @Provides
+  @ViewModelScoped
+  fun provideGetMovieDetailUseCase(
+    movieRepository: MovieRepository,
+  ): GetMovieDetailUseCase {
+    return GetMovieDetailUseCase(movieRepository = movieRepository)
+  }
+
+  // -------------------
+  // TV SHOW
+  // -------------------
+
+  // -------------------
+  // TRENDING ITEMS
+  // -------------------
+
+  @Provides
+  @ViewModelScoped
+  fun provideGetTrendingUseCase(trendingRepository: TrendingRepository): GetTrendingUseCase {
+    return GetTrendingUseCase(trendingRepos = trendingRepository)
   }
 }

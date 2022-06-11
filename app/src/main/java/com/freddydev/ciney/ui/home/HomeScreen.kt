@@ -33,11 +33,10 @@ import com.google.accompanist.insets.statusBarsPadding
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen() {
-  val scrollState = rememberScrollState()
 
   Column(
     modifier = Modifier
-      .verticalScroll(scrollState)
+      .verticalScroll(rememberScrollState())
       .statusBarsPadding(),
   ) {
     HomeContent()
