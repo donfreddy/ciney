@@ -1,7 +1,6 @@
 package com.freddydev.ciney.domain.model.credit
 
 data class CreditsResult(
-  val id: Int,
-  val cast: List<Cast>,
-  val crew: List<Crew>
+  val cast: List<CastDto>,
+  val crew: List<CrewDto>
 )

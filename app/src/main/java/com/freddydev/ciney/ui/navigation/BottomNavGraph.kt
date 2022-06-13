@@ -18,10 +18,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.freddydev.ciney.R
-import com.freddydev.ciney.ui.home.HomeScreen
-import com.freddydev.ciney.ui.movie.MovieScreen
-import com.freddydev.ciney.ui.profile.ProfileScreen
-import com.freddydev.ciney.ui.tvshow.TvShowScreen
+import com.freddydev.ciney.ui.screens.home.HomeScreen
+import com.freddydev.ciney.ui.screens.movie.MovieScreen
+import com.freddydev.ciney.ui.screens.profile.ProfileScreen
+import com.freddydev.ciney.ui.screens.tvshow.TvShowScreen
 import com.freddydev.ciney.util.WindowSize
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -32,11 +32,19 @@ fun NavGraphBuilder.bottomNaGraph(
 ) {
 
   composable(route = BottomNavItem.Home.route) {
-    HomeScreen()
+    HomeScreen(
+      showMovieDetailPage = { movieId ->
+        navController.navigate(CineyScreen.MovieDetail.createRoute(movieId))
+      }
+    )
   }
 
   composable(route = BottomNavItem.Movie.route) {
-    MovieScreen()
+    MovieScreen(
+      showMovieDetailPage = { movieId ->
+        navController.navigate(CineyScreen.MovieDetail.createRoute(movieId))
+      }
+    )
   }
 
   composable(route = BottomNavItem.TvShow.route) {

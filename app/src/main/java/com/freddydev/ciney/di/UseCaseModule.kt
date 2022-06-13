@@ -2,8 +2,8 @@ package com.freddydev.ciney.di
 
 import com.freddydev.ciney.domain.repository.MovieRepository
 import com.freddydev.ciney.domain.repository.TrendingRepository
-import com.freddydev.ciney.domain.usecase.movie.GetMovieDetailUseCase
-import com.freddydev.ciney.domain.usecase.movie.GetMoviesUseCase
+import com.freddydev.ciney.domain.usecase.movie.get_movie.GetMovieUseCase
+import com.freddydev.ciney.domain.usecase.movie.get_movies.GetMoviesUseCase
 import com.freddydev.ciney.domain.usecase.trending.GetTrendingUseCase
 import dagger.Module
 import dagger.Provides
@@ -32,8 +32,8 @@ object UseCaseModule {
   @ViewModelScoped
   fun provideGetMovieDetailUseCase(
     movieRepository: MovieRepository,
-  ): GetMovieDetailUseCase {
-    return GetMovieDetailUseCase(movieRepository = movieRepository)
+  ): GetMovieUseCase {
+    return GetMovieUseCase(movieRepository = movieRepository)
   }
 
   // -------------------

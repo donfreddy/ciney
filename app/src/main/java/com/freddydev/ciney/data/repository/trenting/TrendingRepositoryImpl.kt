@@ -6,7 +6,7 @@ import com.freddydev.ciney.data.repository.trenting.datasource.TrendingLocalData
 import com.freddydev.ciney.data.repository.trenting.datasource.TrendingRemoteDatasource
 import com.freddydev.ciney.domain.model.trending.Trending
 import com.freddydev.ciney.domain.repository.TrendingRepository
-import com.freddydev.ciney.util.Constants
+import com.freddydev.ciney.ui.common.Constants
 import com.freddydev.ciney.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

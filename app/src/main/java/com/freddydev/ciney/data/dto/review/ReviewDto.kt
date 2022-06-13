@@ -1,8 +1,6 @@
-package com.freddydev.ciney.domain.model.review
+package com.freddydev.ciney.data.dto.review
 
-import com.freddydev.ciney.data.dto.review.AuthorDetailDto
-
-data class Review(
+data class ReviewDto(
   val author: String,
   val author_details: AuthorDetailDto,
   val content: String,
