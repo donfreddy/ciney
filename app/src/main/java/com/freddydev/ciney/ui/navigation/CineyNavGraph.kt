@@ -3,13 +3,10 @@ package com.freddydev.ciney.ui.navigation
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.freddydev.ciney.ui.screens.movie_detail.MovieDetailScreen
 import com.freddydev.ciney.util.WindowSize
@@ -27,6 +24,11 @@ fun CineyNavGraph(
   ) {
     // First screen should be implemented here
 
+    // Detail screen
+    composable(route = CineyScreen.MovieDetail.route) {
+      MovieDetailScreen()
+    }
+
     // Main screens (movie, tv, search, settings)
     navigation(
       route = CineyScreen.Main.route,
@@ -36,11 +38,6 @@ fun CineyNavGraph(
         navController = navController,
         windowSize = windowSize,
       )
-    }
-
-    // Detail screen
-    composable(route = CineyScreen.MovieDetail.route) {
-      MovieDetailScreen()
     }
   }
 }

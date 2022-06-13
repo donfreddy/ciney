@@ -2,10 +2,15 @@ package com.freddydev.ciney.data.repository.movie
 
 import android.content.Context
 import androidx.annotation.WorkerThread
+import com.freddydev.ciney.data.dto.credit.toCreditsResult
+import com.freddydev.ciney.data.dto.image.toImagesResult
 import com.freddydev.ciney.data.dto.movie.toMovieDetail
 import com.freddydev.ciney.data.dto.movie.toMovies
-import com.freddydev.ciney.data.repository.movie.datasource.MovieLocalDatasource
-import com.freddydev.ciney.data.repository.movie.datasource.MovieRemoteDatasource
+import com.freddydev.ciney.data.dto.review.toReviewsResult
+import com.freddydev.ciney.data.dto.video.toVideosResult
+import com.freddydev.ciney.data.repository.movie.data_source.MovieLocalDatasource
+import com.freddydev.ciney.data.repository.movie.data_source.MovieRemoteDatasource
+import com.freddydev.ciney.domain.model.credit.CreditsResult
 import com.freddydev.ciney.domain.model.image.ImagesResult
 import com.freddydev.ciney.domain.model.movie.Movie
 import com.freddydev.ciney.domain.model.movie.MovieDetail
@@ -24,13 +29,13 @@ import java.io.IOException
 /**
  * This class is a implementation of [MovieRepository]
  */
+@WorkerThread
 class MovieRepositoryImpl constructor(
   private val context: Context,
   private val movieRemoteDatasource: MovieRemoteDatasource,
   private val movieLocalDataSource: MovieLocalDatasource,
 ) : MovieRepository {
 
-  @WorkerThread
   override fun getMovies(category: String, page: Int): Flow<Resource<List<Movie>>> = flow {
     val isNetworkAvailable = NetworkInfo.isConnected(context)
     println("### Is Network Available: $isNetworkAvailable")
@@ -55,7 +60,6 @@ class MovieRepositoryImpl constructor(
     }
   }
 
-  @WorkerThread
   override fun getMovieDetail(movieId: Int): Flow<Resource<MovieDetail>> = flow {
     try {
       emit(Resource.Loading())
@@ -106,8 +110,8 @@ class MovieRepositoryImpl constructor(
       emit(Resource.Loading())
       val responseBody = movieRemoteDatasource.getMovieVideos(movieId).body()
       if (responseBody != null) {
-        //val movies: List<Movie> = responseBody.toMovies().movies
-        //emit(Resource.Success(movies))
+        val videos: List<Video> = responseBody.toVideosResult().videos
+        emit(Resource.Success(videos))
       }
     } catch (e: HttpException) {
       emit(Resource.Error(message = HTTP_EXCEPT_MSG))
@@ -121,8 +125,23 @@ class MovieRepositoryImpl constructor(
       emit(Resource.Loading())
       val responseBody = movieRemoteDatasource.getMovieReviews(movieId).body()
       if (responseBody != null) {
-        //val movies: List<Movie> = responseBody.toMovies().movies
-        // emit(Resource.Success(movies))
+        val reviews: List<Review> = responseBody.toReviewsResult().reviews
+        emit(Resource.Success(reviews))
+      }
+    } catch (e: HttpException) {
+      emit(Resource.Error(message = HTTP_EXCEPT_MSG))
+    } catch (e: IOException) {
+      emit(Resource.Error(message = IO_EXCEPT_MSG))
+    }
+  }
+
+  override fun getMovieCredits(movieId: Int): Flow<Resource<CreditsResult>> = flow {
+    try {
+      emit(Resource.Loading())
+      val responseBody = movieRemoteDatasource.getMovieCredits(movieId).body()
+      if (responseBody != null) {
+        val credits: CreditsResult = responseBody.toCreditsResult()
+        emit(Resource.Success(credits))
       }
     } catch (e: HttpException) {
       emit(Resource.Error(message = HTTP_EXCEPT_MSG))
@@ -136,8 +155,8 @@ class MovieRepositoryImpl constructor(
       emit(Resource.Loading())
       val responseBody = movieRemoteDatasource.getMovieImages(movieId).body()
       if (responseBody != null) {
-        //val movies: List<Movie> = responseBody.toMovies().movies
-        // emit(Resource.Success(movies))
+        val images: ImagesResult = responseBody.toImagesResult()
+        emit(Resource.Success(images))
       }
     } catch (e: HttpException) {
       emit(Resource.Error(message = HTTP_EXCEPT_MSG))

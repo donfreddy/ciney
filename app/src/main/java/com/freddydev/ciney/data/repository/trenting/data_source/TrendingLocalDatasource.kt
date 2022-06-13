@@ -1,4 +1,4 @@
-package com.freddydev.ciney.data.repository.trenting.datasource
+package com.freddydev.ciney.data.repository.trenting.data_source
 
 import com.freddydev.ciney.domain.model.trending.Trending
 

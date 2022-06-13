@@ -1,11 +1,11 @@
 package com.freddydev.ciney.di
 
-import com.freddydev.ciney.data.repository.movie.datasource.MovieRemoteDatasource
+import com.freddydev.ciney.data.repository.movie.data_source.MovieRemoteDatasource
 import com.freddydev.ciney.data.api.services.MovieService
 import com.freddydev.ciney.data.api.services.TrendingService
-import com.freddydev.ciney.data.repository.movie.datasourceImpl.MovieRemoteDatasourceImpl
-import com.freddydev.ciney.data.repository.trenting.datasource.TrendingRemoteDatasource
-import com.freddydev.ciney.data.repository.trenting.datasourceImpl.TrendingRemoteDatasourceImpl
+import com.freddydev.ciney.data.repository.movie.data_source_impl.MovieRemoteDatasourceImpl
+import com.freddydev.ciney.data.repository.trenting.data_source.TrendingRemoteDatasource
+import com.freddydev.ciney.data.repository.trenting.data_source_impl.TrendingRemoteDatasourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,11 +1,11 @@
-package com.freddydev.ciney.data.repository.movie.datasource
+package com.freddydev.ciney.data.repository.movie.data_source
 
 import com.freddydev.ciney.data.dto.credit.CreditsResultDto
 import com.freddydev.ciney.data.dto.movie.MovieDetailDto
 import com.freddydev.ciney.data.dto.movie.MoviesResultDto
 import com.freddydev.ciney.data.dto.review.ReviewsResultDto
 import com.freddydev.ciney.data.dto.image.ImagesResultDto
-import com.freddydev.ciney.domain.model.video.VideosResultDto
+import com.freddydev.ciney.data.dto.video.VideosResultDto
 import retrofit2.Response
 
 interface MovieRemoteDatasource {

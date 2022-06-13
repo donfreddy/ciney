@@ -6,7 +6,7 @@ import com.freddydev.ciney.data.dto.movie.MoviesResultDto
 import com.freddydev.ciney.data.dto.image.ImagesResultDto
 import com.freddydev.ciney.data.dto.review.ReviewsResultDto
 import com.freddydev.ciney.domain.model.orther.RateResponse
-import com.freddydev.ciney.domain.model.video.VideosResultDto
+import com.freddydev.ciney.data.dto.video.VideosResultDto
 import retrofit2.Response
 import retrofit2.http.*
 

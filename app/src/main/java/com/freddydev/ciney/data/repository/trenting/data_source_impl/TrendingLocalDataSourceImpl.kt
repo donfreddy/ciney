@@ -1,7 +1,7 @@
-package com.freddydev.ciney.data.repository.trenting.datasourceImpl
+package com.freddydev.ciney.data.repository.trenting.data_source_impl
 
 import com.freddydev.ciney.data.database.dao.TrendingDao
-import com.freddydev.ciney.data.repository.trenting.datasource.TrendingLocalDatasource
+import com.freddydev.ciney.data.repository.trenting.data_source.TrendingLocalDatasource
 import com.freddydev.ciney.domain.model.trending.Trending
 
 class TrendingLocalDataSourceImpl(private val trendingDao: TrendingDao) : TrendingLocalDatasource {

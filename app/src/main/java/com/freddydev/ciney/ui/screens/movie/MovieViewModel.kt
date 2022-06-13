@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.freddydev.ciney.domain.usecase.movie.get_movies.GetMoviesUseCase
+import com.freddydev.ciney.domain.use_case.movie.get_movies.GetMoviesUseCase
 import com.freddydev.ciney.ui.common.Constants.DEFAULT_PAGE
 import com.freddydev.ciney.ui.common.Constants.HTTP_EXCEPT_MSG
 import com.freddydev.ciney.util.EnumCategory

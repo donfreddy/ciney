@@ -1,5 +1,6 @@
 package com.freddydev.ciney.domain.repository
 
+import com.freddydev.ciney.domain.model.credit.CreditsResult
 import com.freddydev.ciney.domain.model.image.ImagesResult
 import com.freddydev.ciney.domain.model.movie.Movie
 import com.freddydev.ciney.domain.model.movie.MovieDetail
@@ -21,6 +22,8 @@ interface MovieRepository {
   fun getMovieVideos(movieId: Int): Flow<Resource<List<Video>>>
 
   fun getMovieReviews(movieId: Int): Flow<Resource<List<Review>>>
+
+  fun getMovieCredits(movieId: Int): Flow<Resource<CreditsResult>>
 
   fun getMovieImages(movieId: Int): Flow<Resource<ImagesResult>>
 }

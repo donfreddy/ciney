@@ -1,13 +1,13 @@
-package com.freddydev.ciney.data.repository.movie.datasourceImpl
+package com.freddydev.ciney.data.repository.movie.data_source_impl
 
 import com.freddydev.ciney.data.api.services.MovieService
 import com.freddydev.ciney.data.dto.credit.CreditsResultDto
 import com.freddydev.ciney.data.dto.movie.MovieDetailDto
 import com.freddydev.ciney.data.dto.movie.MoviesResultDto
 import com.freddydev.ciney.data.dto.review.ReviewsResultDto
-import com.freddydev.ciney.data.repository.movie.datasource.MovieRemoteDatasource
+import com.freddydev.ciney.data.repository.movie.data_source.MovieRemoteDatasource
 import com.freddydev.ciney.data.dto.image.ImagesResultDto
-import com.freddydev.ciney.domain.model.video.VideosResultDto
+import com.freddydev.ciney.data.dto.video.VideosResultDto
 import retrofit2.Response
 import javax.inject.Inject
 

@@ -2,8 +2,8 @@ package com.freddydev.ciney.data.repository.trenting
 
 import androidx.annotation.WorkerThread
 import com.freddydev.ciney.data.dto.trending.toTrendingResult
-import com.freddydev.ciney.data.repository.trenting.datasource.TrendingLocalDatasource
-import com.freddydev.ciney.data.repository.trenting.datasource.TrendingRemoteDatasource
+import com.freddydev.ciney.data.repository.trenting.data_source.TrendingLocalDatasource
+import com.freddydev.ciney.data.repository.trenting.data_source.TrendingRemoteDatasource
 import com.freddydev.ciney.domain.model.trending.Trending
 import com.freddydev.ciney.domain.repository.TrendingRepository
 import com.freddydev.ciney.ui.common.Constants

@@ -1,7 +1,6 @@
 package com.freddydev.ciney.domain.model.credit
 
 data class Crew(
-    val adult: Boolean,
     val credit_id: String,
     val department: String,
     val gender: Int,

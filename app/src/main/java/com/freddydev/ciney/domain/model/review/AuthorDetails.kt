@@ -1,8 +1,8 @@
 package com.freddydev.ciney.domain.model.review
 
-data class AuthorDetails(
-    val avatar_path: String,
+data class AuthorDetail(
     val name: String,
-    val rating: Any,
-    val username: String
+    val username: String,
+    val avatar_path: String,
+    val rating: Any
 )

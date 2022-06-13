@@ -1,8 +1,8 @@
-package com.freddydev.ciney.data.repository.trenting.datasourceImpl
+package com.freddydev.ciney.data.repository.trenting.data_source_impl
 
 import com.freddydev.ciney.data.api.services.TrendingService
 import com.freddydev.ciney.data.dto.trending.TrendingResultDto
-import com.freddydev.ciney.data.repository.trenting.datasource.TrendingRemoteDatasource
+import com.freddydev.ciney.data.repository.trenting.data_source.TrendingRemoteDatasource
 import retrofit2.Response
 import javax.inject.Inject
 

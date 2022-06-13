@@ -1,8 +1,8 @@
-package com.freddydev.ciney.domain.usecase.trending
+package com.freddydev.ciney.domain.use_case.get_trending
 
 import com.freddydev.ciney.domain.model.trending.Trending
 import com.freddydev.ciney.domain.repository.TrendingRepository
-import com.freddydev.ciney.domain.usecase.UseCase
+import com.freddydev.ciney.domain.use_case.UseCase
 import com.freddydev.ciney.util.Resource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

@@ -1,4 +1,6 @@
-package com.freddydev.ciney.domain.model.video
+package com.freddydev.ciney.data.dto.video
+
+import com.freddydev.ciney.domain.model.video.Video
 
 data class VideoDto(
   val id: String,
@@ -11,4 +13,15 @@ data class VideoDto(
   val site: String,
   val size: Int,
   val type: String
+)
+
+fun VideoDto.toVideo() = Video(
+  id = id,
+  key = key,
+  name = name,
+  official = official,
+  published_at = published_at,
+  site = site,
+  size = size,
+  type = type
 )

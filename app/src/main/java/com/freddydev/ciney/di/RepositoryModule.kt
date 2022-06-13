@@ -2,11 +2,11 @@ package com.freddydev.ciney.di
 
 import android.content.Context
 import com.freddydev.ciney.data.repository.movie.MovieRepositoryImpl
-import com.freddydev.ciney.data.repository.movie.datasource.MovieLocalDatasource
-import com.freddydev.ciney.data.repository.movie.datasource.MovieRemoteDatasource
+import com.freddydev.ciney.data.repository.movie.data_source.MovieLocalDatasource
+import com.freddydev.ciney.data.repository.movie.data_source.MovieRemoteDatasource
 import com.freddydev.ciney.data.repository.trenting.TrendingRepositoryImpl
-import com.freddydev.ciney.data.repository.trenting.datasource.TrendingLocalDatasource
-import com.freddydev.ciney.data.repository.trenting.datasource.TrendingRemoteDatasource
+import com.freddydev.ciney.data.repository.trenting.data_source.TrendingLocalDatasource
+import com.freddydev.ciney.data.repository.trenting.data_source.TrendingRemoteDatasource
 import com.freddydev.ciney.domain.repository.MovieRepository
 import com.freddydev.ciney.domain.repository.TrendingRepository
 import dagger.Module

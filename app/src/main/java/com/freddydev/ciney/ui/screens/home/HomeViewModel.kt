@@ -4,7 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.freddydev.ciney.domain.usecase.trending.GetTrendingUseCase
+import com.freddydev.ciney.domain.use_case.get_trending.GetTrendingUseCase
 import com.freddydev.ciney.ui.common.Constants
 import com.freddydev.ciney.util.EnumMediaType
 import com.freddydev.ciney.util.EnumsTimeWindow

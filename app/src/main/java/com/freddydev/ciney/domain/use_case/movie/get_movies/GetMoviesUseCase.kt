@@ -1,8 +1,8 @@
-package com.freddydev.ciney.domain.usecase.movie.get_movies
+package com.freddydev.ciney.domain.use_case.movie.get_movies
 
 import com.freddydev.ciney.domain.model.movie.Movie
 import com.freddydev.ciney.domain.repository.MovieRepository
-import com.freddydev.ciney.domain.usecase.UseCase
+import com.freddydev.ciney.domain.use_case.UseCase
 import com.freddydev.ciney.util.Resource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.freddydev.ciney.domain.usecase
+package com.freddydev.ciney.domain.use_case
 
 /**
  * This abstract class is a base class for all use cases.

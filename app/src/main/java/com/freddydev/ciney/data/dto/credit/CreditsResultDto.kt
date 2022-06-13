@@ -1,8 +1,6 @@
 package com.freddydev.ciney.data.dto.credit
 
-import com.freddydev.ciney.domain.model.credit.CastDto
 import com.freddydev.ciney.domain.model.credit.CreditsResult
-import com.freddydev.ciney.domain.model.credit.CrewDto
 
 data class CreditsResultDto(
   val id: Int,
@@ -12,7 +10,7 @@ data class CreditsResultDto(
 
 fun CreditsResultDto.toCreditsResult(): CreditsResult {
   return CreditsResult(
-    cast = cast.map { it },
-    crew = crew.map { it }
+    cast = cast.map { it.toCast() },
+    crew = crew.map { it.toCrew() }
   )
 }
