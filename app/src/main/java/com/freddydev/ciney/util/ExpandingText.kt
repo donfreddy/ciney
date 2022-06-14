@@ -13,6 +13,8 @@ import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.freddydev.ciney.ui.theme.Begonia
+import com.freddydev.ciney.ui.theme.CineyFont
 import java.util.regex.Pattern
 
 @Composable
@@ -96,7 +98,7 @@ fun ExpandingText(
         textWithMoreLess = buildAnnotatedString {
           append(textWithLinks)
           pushStringAnnotation(tag = "show_more_tag", annotation = "")
-          withStyle(SpanStyle(Color.Red)) {
+          withStyle(SpanStyle(Begonia)) {
             append(" Show less")
           }
           pop()
@@ -113,7 +115,7 @@ fun ExpandingText(
         textWithMoreLess = buildAnnotatedString {
           append(adjustedText)
           pushStringAnnotation(tag = "show_more_tag", annotation = "")
-          withStyle(SpanStyle(Color.Red)) {
+          withStyle(SpanStyle(Begonia)) {
             append(showMoreString)
           }
           pop()
@@ -129,8 +131,9 @@ fun ExpandingText(
     ClickableText(
       text = textWithMoreLess,
       style = TextStyle(
-        color = MaterialTheme.colors.onBackground,
-        fontSize = 20.sp
+        color = MaterialTheme.colors.onBackground.copy(0.8f),
+        fontSize = 15.sp,
+        fontFamily = CineyFont
       ),
       onClick = { offset ->
         textWithMoreLess.getStringAnnotations(
@@ -150,11 +153,10 @@ fun ExpandingText(
           }
         }
       },
-      maxLines = if (isExpanded) Int.MAX_VALUE else 3,
+      maxLines = if (isExpanded) Int.MAX_VALUE else 4,
       onTextLayout = { textLayoutResultState.value = it },
       modifier = modifier
         .animateContentSize()
-        .padding(15.dp)
     )
   }
 }

@@ -1,5 +1,7 @@
 package com.freddydev.ciney.ui.screens.movie_detail
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,17 +11,21 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
@@ -33,6 +39,9 @@ import com.freddydev.ciney.R
 import com.freddydev.ciney.domain.model.movie.MovieDetail
 import com.freddydev.ciney.ui.common.Constants.APP_BAR_COLLAPSED_HEIGHT
 import com.freddydev.ciney.ui.common.Constants.APP_BAR_EXPANDED_HEIGHT
+import com.freddydev.ciney.ui.theme.CineyShapes
+import com.freddydev.ciney.ui.theme.DavyGrey
+import com.freddydev.ciney.util.ExpandingText
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
 import kotlin.math.max
@@ -190,7 +199,8 @@ fun MovieDetailContent(
 ) {
   LazyColumn(contentPadding = PaddingValues(top = APP_BAR_EXPANDED_HEIGHT), state = scrollState) {
     item {
-       BasicInfo(movie = movie)
+      BasicInfo(movie = movie)
+      OverviewSection(text = movie.overview)
     }
   }
 }
@@ -199,5 +209,64 @@ fun MovieDetailContent(
 fun BasicInfo(
   movie: MovieDetail
 ) {
-  Text(text = movie.title, fontSize = 26.sp, fontWeight = FontWeight.Bold)
+  val genres = movie.genres
+  var text = ""
+  for (g in genres) {
+    text += if (g != genres.last()) "${g.name} • " else g.name
+  }
+
+  Column(
+    horizontalAlignment = Alignment.CenterHorizontally
+  ) {
+    Row(
+      horizontalArrangement = Arrangement.Center,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 16.dp)
+    ) {
+      Text(
+        text = text,
+        color = DavyGrey,
+        textAlign = TextAlign.Center
+      )
+    }
+    Row(
+      horizontalArrangement = Arrangement.SpaceEvenly,
+      modifier = Modifier
+        .fillMaxWidth()
+        .padding(top = 16.dp)
+    ) {
+      InfoColumn("2022", "Year")
+      InfoColumn("2h22m", "Duration")
+      InfoColumn("13+", "Age")
+      InfoColumn("8.2", "Vote")
+    }
+  }
+}
+
+@Composable
+fun InfoColumn(text: String, subText: String) {
+  Column(
+    modifier = Modifier
+  ) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+      Text(text = text, style = MaterialTheme.typography.h6)
+      Spacer(modifier = Modifier.height(2.dp))
+      Text(text = subText, style = MaterialTheme.typography.body2, color = DavyGrey)
+    }
+  }
+}
+
+@Composable
+fun OverviewSection(text: String) {
+  Column(
+    modifier = Modifier.padding(16.dp)
+  ) {
+    Column(horizontalAlignment = Alignment.Start) {
+      Text(text = "Overview", style = MaterialTheme.typography.h6,  color = White)
+      Spacer(modifier = Modifier.height(6.dp))
+      ExpandingText(text = text)
+      // Text(text = text, color = White.copy(0.8f))
+    }
+  }
 }
