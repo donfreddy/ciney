@@ -1,7 +1,6 @@
 package com.freddydev.ciney.util
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.MaterialTheme
@@ -11,7 +10,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.freddydev.ciney.ui.theme.Begonia
 import com.freddydev.ciney.ui.theme.CineyFont
@@ -19,8 +17,10 @@ import java.util.regex.Pattern
 
 @Composable
 fun ExpandingText(
+  text: String,
   modifier: Modifier = Modifier,
-  text: String
+  minimizedMaxLines: Int = 4,
+  colorClickableText: Color = Begonia,
 ) {
   var isExpanded by remember { mutableStateOf(false) }
   val textLayoutResultState = remember { mutableStateOf<TextLayoutResult?>(null) }
@@ -98,7 +98,7 @@ fun ExpandingText(
         textWithMoreLess = buildAnnotatedString {
           append(textWithLinks)
           pushStringAnnotation(tag = "show_more_tag", annotation = "")
-          withStyle(SpanStyle(Begonia)) {
+          withStyle(SpanStyle(colorClickableText)) {
             append(" Show less")
           }
           pop()
@@ -115,7 +115,7 @@ fun ExpandingText(
         textWithMoreLess = buildAnnotatedString {
           append(adjustedText)
           pushStringAnnotation(tag = "show_more_tag", annotation = "")
-          withStyle(SpanStyle(Begonia)) {
+          withStyle(SpanStyle(colorClickableText)) {
             append(showMoreString)
           }
           pop()
@@ -153,7 +153,7 @@ fun ExpandingText(
           }
         }
       },
-      maxLines = if (isExpanded) Int.MAX_VALUE else 4,
+      maxLines = if (isExpanded) Int.MAX_VALUE else minimizedMaxLines,
       onTextLayout = { textLayoutResultState.value = it },
       modifier = modifier
         .animateContentSize()

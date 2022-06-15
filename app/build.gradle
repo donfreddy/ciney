@@ -146,6 +146,9 @@ dependencies {
   implementation "com.google.android.exoplayer:exoplayer-dash:$versions.exoplayerVersion"
   implementation "com.google.android.exoplayer:exoplayer-ui:$versions.exoplayerVersion"
 
+  // What if
+  implementation "com.github.skydoves:whatif:1.1.1"
+
   //Timber
   implementation "com.jakewharton.timber:timber:$timber_version"
 

@@ -105,12 +105,12 @@ class MovieRepositoryImpl constructor(
     }
   }
 
-  override fun getMovieVideos(movieId: Int): Flow<Resource<List<Video>>> = flow {
+  override fun getMovieVideos(movieId: Int): Flow<Resource<List<Video>?>> = flow {
     try {
       emit(Resource.Loading())
       val responseBody = movieRemoteDatasource.getMovieVideos(movieId).body()
       if (responseBody != null) {
-        val videos: List<Video> = responseBody.toVideosResult().videos
+        val videos: List<Video>? = responseBody.toVideosResult().videos
         emit(Resource.Success(videos))
       }
     } catch (e: HttpException) {

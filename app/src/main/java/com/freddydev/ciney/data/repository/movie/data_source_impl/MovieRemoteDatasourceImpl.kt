@@ -33,7 +33,7 @@ class MovieRemoteDatasourceImpl @Inject constructor(private val movieService: Mo
     return movieService.getRecommended(id = movieId, page = page)
   }
 
-  override suspend fun getMovieVideos(movieId: Int): Response<VideosResultDto> {
+  override suspend fun getMovieVideos(movieId: Int): Response<VideosResultDto?> {
     return movieService.getVideos(id = movieId)
   }
 

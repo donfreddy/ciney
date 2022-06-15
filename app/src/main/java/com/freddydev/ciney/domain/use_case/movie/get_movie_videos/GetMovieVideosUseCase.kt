@@ -12,7 +12,7 @@ class GetMovieVideosUseCase @Inject constructor(
   private val movieRepos: MovieRepository,
 ) : UseCase<List<Movie>, GetMovieVideosUseCase.Params>() {
 
-  fun execute(params: Params): Flow<Resource<List<Video>>> {
+  fun execute(params: Params): Flow<Resource<List<Video>?>> {
     return movieRepos.getMovieVideos(movieId = params.movieId)
   }
 

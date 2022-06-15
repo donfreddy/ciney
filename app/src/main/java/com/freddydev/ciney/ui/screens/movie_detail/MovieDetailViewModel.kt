@@ -34,13 +34,16 @@ class MovieDetailViewModel @Inject constructor(
   private val _movieDetailState = mutableStateOf(MovieDetailState())
   val movieDetailState: State<MovieDetailState> = _movieDetailState
 
-//  private val _similarMoviesState = mutableStateOf(SimilarMoviesState())
-//  val similarMoviesState = State<SimilarMoviesState> = _similarMoviesState
+  // Trailers state
+//  private val _trailersState = mutableStateOf(MovieDetailState())
+//  val trailersState: State<MovieDetailState> = _trailersState
+
 
   init {
     savedStateHandle.get<String>(Constants.PARAM_MOVIE_ID)?.let { movieId ->
       println("### Movie ID: $movieId")
       getMovieDetail(movieId.toInt())
+      getMovieVideos(movieId.toInt())
     }
   }
 
@@ -84,5 +87,48 @@ class MovieDetailViewModel @Inject constructor(
 //          }
 //        }
 //      }.launchIn(viewModelScope)
+  }
+
+  /**
+   * Get recommended movies.
+   */
+  private fun getRecommendedMovies(movieId: Int) {
+//    getRecommendedMovies.execute(params = GetRecommendedMoviesUseCase.Params(movieId = movieId))
+//      .onEach { result ->
+//        when (result) {
+//          is Resource.Loading -> {
+//            _movieDetailState.value = MovieDetailState(isLoading = true)
+//          }
+//          is Resource.Success -> {
+//            _movieDetailState.value = MovieDetailState(recommendedMovies = result.data)
+//          }
+//          is Resource.Error -> {
+//            _movieDetailState.value =
+//              MovieDetailState(error = "${result.message} ?: ${Constants.HTTP_EXCEPT_MSG}")
+//          }
+//        }
+//      }.launchIn(viewModelScope)
+  }
+
+  /**
+   * Get movie videos.
+   */
+  private fun getMovieVideos(movieId: Int) {
+    getMovieVideos.execute(params = GetMovieVideosUseCase.Params(movieId = movieId))
+      .onEach { result ->
+        when (result) {
+//          is Resource.Loading -> {
+//            _movieDetailState.value = MovieDetailState(isLoading = true)
+//          }
+          is Resource.Success -> {
+            // _movieDetailState.value = MovieDetailState(videos = result.data)
+          }
+//          is Resource.Error -> {
+//            _movieDetailState.value =
+//              MovieDetailState(error = "${result.message} ?: ${Constants.HTTP_EXCEPT_MSG}")
+//          }
+          else -> {}
+        }
+      }.launchIn(viewModelScope)
   }
 }

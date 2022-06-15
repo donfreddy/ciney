@@ -1,30 +1,22 @@
 package com.freddydev.ciney.ui.screens.movie_detail
 
-import androidx.annotation.DrawableRes
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -36,14 +28,16 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.freddydev.ciney.BuildConfig
 import com.freddydev.ciney.R
+import com.freddydev.ciney.domain.model.credit.Cast
 import com.freddydev.ciney.domain.model.movie.MovieDetail
+import com.freddydev.ciney.domain.model.video.Video
 import com.freddydev.ciney.ui.common.Constants.APP_BAR_COLLAPSED_HEIGHT
 import com.freddydev.ciney.ui.common.Constants.APP_BAR_EXPANDED_HEIGHT
-import com.freddydev.ciney.ui.theme.CineyShapes
 import com.freddydev.ciney.ui.theme.DavyGrey
 import com.freddydev.ciney.util.ExpandingText
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
+import com.skydoves.whatif.whatIfNotNullOrEmpty
 import kotlin.math.max
 import kotlin.math.min
 
@@ -52,22 +46,22 @@ fun MovieDetailScreen(
   viewModel: MovieDetailViewModel = hiltViewModel()
 ) {
   val scrollState = rememberLazyListState()
-  val state = viewModel.movieDetailState.value
+  val movieState = viewModel.movieDetailState.value
 
   Box(modifier = Modifier.fillMaxSize()) {
 
-    state.movie?.let { movie ->
-      MovieDetailContent(movie = movie, scrollState = scrollState)
+    movieState.movie?.let { movie ->
+      MovieDetailContent(movie = movie, scrollState = scrollState, viewModel = viewModel)
       ParallaxToolbar(movie = movie, scrollState = scrollState)
     }
 
-    if (state.isLoading) {
+    if (movieState.isLoading) {
       CircularProgressIndicator(modifier = Modifier.align(alignment = Alignment.Center))
     }
 
-    if (state.error.isNotBlank()) {
+    if (movieState.error.isNotBlank()) {
       Text(
-        text = state.error,
+        text = movieState.error,
         color = MaterialTheme.colors.error,
         textAlign = TextAlign.Center,
         modifier = Modifier
@@ -150,7 +144,7 @@ fun ParallaxToolbar(
           text = movie.title,
           fontSize = 26.sp,
           color = White,
-          fontWeight = FontWeight.Bold,
+          fontWeight = Bold,
           maxLines = 1,
           overflow = TextOverflow.Ellipsis,
           modifier = Modifier
@@ -195,18 +189,23 @@ fun ParallaxToolbar(
 @Composable
 fun MovieDetailContent(
   movie: MovieDetail,
-  scrollState: LazyListState
+  scrollState: LazyListState,
+  viewModel: MovieDetailViewModel
 ) {
+  // val trailersState = viewModel.trailersState.value
+//  val creditsState = viewModel.creditsState.value
+//  val reviewsState = viewModel.reviewsState.value
+
   LazyColumn(contentPadding = PaddingValues(top = APP_BAR_EXPANDED_HEIGHT), state = scrollState) {
     item {
-      BasicInfo(movie = movie)
-      OverviewSection(text = movie.overview)
+      MovieDetailSection(movie = movie)
+      // TrailersSection(trailers = trailersState.videos)
     }
   }
 }
 
 @Composable
-fun BasicInfo(
+fun MovieDetailSection(
   movie: MovieDetail
 ) {
   val genres = movie.genres
@@ -218,6 +217,7 @@ fun BasicInfo(
   Column(
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
+    // movie genres
     Row(
       horizontalArrangement = Arrangement.Center,
       modifier = Modifier
@@ -230,16 +230,30 @@ fun BasicInfo(
         textAlign = TextAlign.Center
       )
     }
+
+    // Basic info
     Row(
       horizontalArrangement = Arrangement.SpaceEvenly,
       modifier = Modifier
         .fillMaxWidth()
         .padding(top = 16.dp)
     ) {
-      InfoColumn("2022", "Year")
+      var time = ""
+
+      InfoColumn(text = "${movie.release_date?.substring(0, 4)}", "Year")
       InfoColumn("2h22m", "Duration")
       InfoColumn("13+", "Age")
-      InfoColumn("8.2", "Vote")
+      InfoColumn(text = "${movie.vote_average}", "Rating")
+    }
+
+    // Overview
+    Column(
+      modifier = Modifier.padding(16.dp),
+      horizontalAlignment = Alignment.Start
+    ) {
+      Text(text = "Storyline", style = MaterialTheme.typography.h6, color = White)
+      Spacer(modifier = Modifier.height(6.dp))
+      ExpandingText(text = movie.overview)
     }
   }
 }
@@ -258,15 +272,72 @@ fun InfoColumn(text: String, subText: String) {
 }
 
 @Composable
-fun OverviewSection(text: String) {
+fun TrailersSection(
+  trailers: List<Video>?
+) {
+
+  trailers.whatIfNotNullOrEmpty { videos ->
+    Column(
+      modifier = Modifier.padding(16.dp)
+    ) {
+      Column(horizontalAlignment = Alignment.Start) {
+        Text(
+          text = "Trailers",
+          style = MaterialTheme.typography.h6,
+          color = White,
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+//        LazyRow() {
+//          items(items = videos) { video ->
+//            VideoThumbnail(video = video)
+//          }
+//        }
+        Spacer(modifier = Modifier.height(10.dp))
+      }
+    }
+  }
+}
+
+@Composable
+private fun VideoThumbnail(video: Video) {
+
+}
+
+@Composable
+fun CastSection() {
   Column(
     modifier = Modifier.padding(16.dp)
   ) {
     Column(horizontalAlignment = Alignment.Start) {
-      Text(text = "Overview", style = MaterialTheme.typography.h6,  color = White)
+      Text(text = "Cast", style = MaterialTheme.typography.h6, color = White)
       Spacer(modifier = Modifier.height(6.dp))
-      ExpandingText(text = text)
-      // Text(text = text, color = White.copy(0.8f))
+      // CastList()
+    }
+  }
+}
+
+@Composable
+fun CastList(
+  casts: List<Cast>
+) {
+  LazyRow() {
+    itemsIndexed(casts) { _, cast ->
+      CastItem(cast = cast)
+    }
+  }
+}
+
+@Composable
+fun CastItem(
+  cast: Cast
+) {
+  Column(
+    modifier = Modifier.padding(16.dp)
+  ) {
+    Column(horizontalAlignment = Alignment.Start) {
+      Text(text = cast.name, style = MaterialTheme.typography.h6, color = White)
+      Spacer(modifier = Modifier.height(2.dp))
+      Text(text = cast.character, style = MaterialTheme.typography.body2, color = DavyGrey)
     }
   }
 }
