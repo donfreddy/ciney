@@ -50,6 +50,7 @@ fun MovieDetailDto.toMovieDetail() = MovieDetail(
   production_countries = production_countries,
   release_date = release_date,
   revenue = revenue,
+  runtime = runtime,
   spoken_languages = spoken_languages,
   status = status,
   tagline = tagline,

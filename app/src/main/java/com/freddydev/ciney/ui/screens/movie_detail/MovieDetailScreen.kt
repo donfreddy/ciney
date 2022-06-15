@@ -1,5 +1,6 @@
 package com.freddydev.ciney.ui.screens.movie_detail
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
@@ -35,6 +36,7 @@ import com.freddydev.ciney.ui.common.Constants.APP_BAR_COLLAPSED_HEIGHT
 import com.freddydev.ciney.ui.common.Constants.APP_BAR_EXPANDED_HEIGHT
 import com.freddydev.ciney.ui.theme.DavyGrey
 import com.freddydev.ciney.util.ExpandingText
+import com.freddydev.ciney.util.Utils
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
 import com.skydoves.whatif.whatIfNotNullOrEmpty
@@ -208,11 +210,6 @@ fun MovieDetailContent(
 fun MovieDetailSection(
   movie: MovieDetail
 ) {
-  val genres = movie.genres
-  var text = ""
-  for (g in genres) {
-    text += if (g != genres.last()) "${g.name} • " else g.name
-  }
 
   Column(
     horizontalAlignment = Alignment.CenterHorizontally
@@ -225,7 +222,7 @@ fun MovieDetailSection(
         .padding(horizontal = 16.dp)
     ) {
       Text(
-        text = text,
+        text = Utils.getGenre(genres = movie.genres),
         color = DavyGrey,
         textAlign = TextAlign.Center
       )
@@ -238,12 +235,13 @@ fun MovieDetailSection(
         .fillMaxWidth()
         .padding(top = 16.dp)
     ) {
-      var time = ""
-
-      InfoColumn(text = "${movie.release_date?.substring(0, 4)}", "Year")
-      InfoColumn("2h22m", "Duration")
-      InfoColumn("13+", "Age")
-      InfoColumn(text = "${movie.vote_average}", "Rating")
+      InfoColumn(
+        icon = R.drawable.ic_calendar_outline,
+        text = "${movie.release_date?.substring(0, 4)}",
+      )
+      InfoColumn(icon = R.drawable.ic_clock_outline, text = Utils.getDuration(movie.runtime))
+      InfoColumn(icon = R.drawable.ic_tv, "13+")
+      InfoColumn(icon = R.drawable.ic_star_outline, text = "${movie.vote_average}")
     }
 
     // Overview
@@ -259,14 +257,22 @@ fun MovieDetailSection(
 }
 
 @Composable
-fun InfoColumn(text: String, subText: String) {
+fun InfoColumn(@DrawableRes icon: Int, text: String) {
   Column(
     modifier = Modifier
   ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-      Text(text = text, style = MaterialTheme.typography.h6)
-      Spacer(modifier = Modifier.height(2.dp))
-      Text(text = subText, style = MaterialTheme.typography.body2, color = DavyGrey)
+      Icon(
+        painter = painterResource(id = icon),
+        contentDescription = null,
+        tint = MaterialTheme.colors.primary.copy(0.6f),
+        modifier = Modifier.height(24.dp)
+      )
+      Spacer(modifier = Modifier.height(4.dp))
+      Text(text = text, fontWeight = Bold)
+//      Text(text = text, style = MaterialTheme.typography.subtitle2)
+//      Spacer(modifier = Modifier.height(2.dp))
+//      Text(text = subText, style = MaterialTheme.typography.body2, color = DavyGrey)
     }
   }
 }
