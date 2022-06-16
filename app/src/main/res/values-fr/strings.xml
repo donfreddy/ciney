@@ -30,4 +30,7 @@
 
   <!--  Profile-->
   <string name="profile_title">Profile</string>
+
+  <string name="read_more">… lire plus</string>
+  <string name="read_less">lire moins</string>
 </resources>

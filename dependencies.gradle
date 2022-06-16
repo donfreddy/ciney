@@ -10,6 +10,7 @@ ext.versions = [
     // compose
     composeVersion       : '1.1.0-beta01',
     activityVersion      : '1.4.0',
+    constraintVersion    : '1.0.0-beta02',
     composeNavVersion    : '2.5.0-rc01',
 
     // compose image loading

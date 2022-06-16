@@ -42,7 +42,7 @@ interface MovieService {
 
   /** Get the videos that have been added to a movie. */
   @GET("/3/movie/{movie_id}/videos")
-  suspend fun getVideos(@Path(MOVIE_ID) id: Int): Response<VideosResultDto?>
+  suspend fun getVideos(@Path(MOVIE_ID) id: Int): Response<VideosResultDto>
 
   /** Get the user reviews for a movie. */
   @GET("/3/movie/{movie_id}/reviews")

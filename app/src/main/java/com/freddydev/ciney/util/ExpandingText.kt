@@ -1,5 +1,6 @@
 package com.freddydev.ciney.util
 
+import android.content.Context
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.selection.SelectionContainer
@@ -11,16 +12,18 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
+import com.freddydev.ciney.R
 import com.freddydev.ciney.ui.theme.Begonia
 import com.freddydev.ciney.ui.theme.CineyFont
 import java.util.regex.Pattern
 
 @Composable
 fun ExpandingText(
+  context:Context,
   text: String,
   modifier: Modifier = Modifier,
   minimizedMaxLines: Int = 4,
-  colorClickableText: Color = Begonia,
+  colorClickableText: Color = Begonia
 ) {
   var isExpanded by remember { mutableStateOf(false) }
   val textLayoutResultState = remember { mutableStateOf<TextLayoutResult?>(null) }
@@ -97,26 +100,26 @@ fun ExpandingText(
       isExpanded -> {
         textWithMoreLess = buildAnnotatedString {
           append(textWithLinks)
-          pushStringAnnotation(tag = "show_more_tag", annotation = "")
+          pushStringAnnotation(tag = "read_more_tag", annotation = "")
           withStyle(SpanStyle(colorClickableText)) {
-            append(" Show less")
+            append(" ${context.getString(R.string.read_less)}")
           }
           pop()
         }
       }
       !isExpanded && textLayoutResult.hasVisualOverflow -> { //return true if either vertical overflow or horizontal overflow happens.
         val lastCharIndex = textLayoutResult.getLineEnd(3 - 1)
-        val showMoreString = "... Show More"
+        val readMoreString = context.getString(R.string.read_more)
         val adjustedText = textWithLinks
           .substring(startIndex = 0, endIndex = lastCharIndex)
-          .dropLast(showMoreString.length)
+          .dropLast(readMoreString.length)
           .dropLastWhile { it == ' ' || it == '.' }
 
         textWithMoreLess = buildAnnotatedString {
           append(adjustedText)
-          pushStringAnnotation(tag = "show_more_tag", annotation = "")
+          pushStringAnnotation(tag = "read_more_tag", annotation = "")
           withStyle(SpanStyle(colorClickableText)) {
-            append(showMoreString)
+            append(readMoreString)
           }
           pop()
         }
@@ -145,7 +148,7 @@ fun ExpandingText(
         }
         if (isClickable) {
           textWithMoreLess.getStringAnnotations(
-            tag = "show_more_tag",
+            tag = "read_more_tag",
             start = offset,
             end = offset
           ).firstOrNull()?.let {

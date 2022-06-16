@@ -19,7 +19,7 @@ interface MovieRepository {
 
   fun getRecommendedMovies(movieId: Int, page: Int): Flow<Resource<List<Movie>>>
 
-  fun getMovieVideos(movieId: Int): Flow<Resource<List<Video>?>>
+  fun getMovieVideos(movieId: Int): Flow<Resource<List<Video>>>
 
   fun getMovieReviews(movieId: Int): Flow<Resource<List<Review>>>
 

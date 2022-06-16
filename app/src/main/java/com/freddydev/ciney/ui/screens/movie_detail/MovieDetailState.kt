@@ -9,3 +9,9 @@ data class MovieDetailState(
   val videos: List<Video>? = emptyList(),
   val error: String = ""
 )
+
+data class MovieVideoState(
+  val isLoading: Boolean = false,
+  val videos: List<Video> = emptyList(),
+  val error: String = ""
+)

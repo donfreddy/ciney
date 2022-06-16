@@ -1,7 +1,10 @@
 package com.freddydev.ciney.ui.screens.movie_detail
 
+import android.content.Intent
+import android.net.Uri
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.material.*
@@ -21,9 +24,11 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -194,14 +199,14 @@ fun MovieDetailContent(
   scrollState: LazyListState,
   viewModel: MovieDetailViewModel
 ) {
-  // val trailersState = viewModel.trailersState.value
+  val trailersState = viewModel.trailersState.value
 //  val creditsState = viewModel.creditsState.value
 //  val reviewsState = viewModel.reviewsState.value
 
   LazyColumn(contentPadding = PaddingValues(top = APP_BAR_EXPANDED_HEIGHT), state = scrollState) {
     item {
       MovieDetailSection(movie = movie)
-      // TrailersSection(trailers = trailersState.videos)
+      TrailersSection(trailersState = trailersState)
     }
   }
 }
@@ -251,7 +256,7 @@ fun MovieDetailSection(
     ) {
       Text(text = "Storyline", style = MaterialTheme.typography.h6, color = White)
       Spacer(modifier = Modifier.height(6.dp))
-      ExpandingText(text = movie.overview)
+      ExpandingText(context = LocalContext.current, text = movie.overview)
     }
   }
 }
@@ -279,25 +284,25 @@ fun InfoColumn(@DrawableRes icon: Int, text: String) {
 
 @Composable
 fun TrailersSection(
-  trailers: List<Video>?
+  trailersState: MovieVideoState
 ) {
 
-  trailers.whatIfNotNullOrEmpty { videos ->
+  trailersState.videos.whatIfNotNullOrEmpty { videos ->
     Column(
       modifier = Modifier.padding(16.dp)
     ) {
       Column(horizontalAlignment = Alignment.Start) {
         Text(
-          text = "Trailers",
+          text = "Trailers (${videos.size})",
           style = MaterialTheme.typography.h6,
           color = White,
         )
         Spacer(modifier = Modifier.height(10.dp))
-//        LazyRow() {
-//          items(items = videos) { video ->
-//            VideoThumbnail(video = video)
-//          }
-//        }
+        LazyRow() {
+          items(items = videos) { video ->
+            VideoThumbnail(video = video)
+          }
+        }
         Spacer(modifier = Modifier.height(10.dp))
       }
     }
@@ -306,7 +311,18 @@ fun TrailersSection(
 
 @Composable
 private fun VideoThumbnail(video: Video) {
+  Surface {
+    ConstraintLayout(
+      modifier = Modifier
+        .width(150.dp)
+        .height(100.dp)
+        .clickable(
+          onClick = {}
+        )
+    ){
 
+    }
+  }
 }
 
 @Composable

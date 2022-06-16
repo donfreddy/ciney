@@ -29,6 +29,9 @@
 
   <!--  Profile-->
   <string name="profile_title">Profile</string>
-  <string name="text_search" />
+
+  <string name="read_more">… read more</string>
+  <string name="read_less">read less</string>
+  <string name="text_search" translatable="false" />
 
 </resources>

@@ -17,11 +17,9 @@ data class VideoDto(
 
 fun VideoDto.toVideo() = Video(
   id = id,
-  key = key,
   name = name,
-  official = official,
-  published_at = published_at,
   site = site,
+  key = key,
   size = size,
   type = type
 )
