@@ -33,4 +33,8 @@
 
   <string name="read_more">… lire plus</string>
   <string name="read_less">lire moins</string>
+
+  <!--  Movie detail page-->
+  <string name="overview">Vue d\'ensemble</string>
+  <string name="trailers">Bandes-annonces</string>
 </resources>

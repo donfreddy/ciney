@@ -28,7 +28,7 @@ object DateTime {
   }
 
   fun getShortDate(date: String): String {
-    return formatDate(date, "MMM dd, yyyy")
+    return formatDate(date, "MMM yyyy")
   }
 
   @RequiresApi(Build.VERSION_CODES.O)

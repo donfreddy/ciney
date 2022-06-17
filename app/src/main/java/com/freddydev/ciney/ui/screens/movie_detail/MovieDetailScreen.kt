@@ -1,18 +1,22 @@
 package com.freddydev.ciney.ui.screens.movie_detail
 
-import android.content.Intent
-import android.net.Uri
+import android.annotation.SuppressLint
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.graphicsLayer
@@ -20,11 +24,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,8 +44,13 @@ import com.freddydev.ciney.domain.model.video.Video
 import com.freddydev.ciney.ui.common.Constants.APP_BAR_COLLAPSED_HEIGHT
 import com.freddydev.ciney.ui.common.Constants.APP_BAR_EXPANDED_HEIGHT
 import com.freddydev.ciney.ui.theme.DavyGrey
+import com.freddydev.ciney.util.DateTime
 import com.freddydev.ciney.util.ExpandingText
 import com.freddydev.ciney.util.Utils
+import com.freddydev.ciney.util.extensions.toYear
+import com.freddydev.ciney.util.ratingbar.CustomRatingBar
+import com.freddydev.ciney.util.ratingbar.RatingBarConfig
+import com.freddydev.ciney.util.ratingbar.RatingBarStyle
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.statusBarsPadding
 import com.skydoves.whatif.whatIfNotNullOrEmpty
@@ -127,17 +136,19 @@ fun ParallaxToolbar(
             )
         )
 
-        Row(
-          modifier = Modifier
-            .fillMaxHeight()
-            .padding(horizontal = 16.dp, vertical = 8.dp),
-          verticalAlignment = Alignment.Bottom
-        ) {
-          Text(
-            text = movie.tagline,
-            style = MaterialTheme.typography.caption,
-            fontStyle = FontStyle.Italic,
-          )
+        movie.tagline?.let { tagline ->
+          Row(
+            modifier = Modifier
+              .fillMaxHeight()
+              .padding(horizontal = 16.dp, vertical = 8.dp),
+            verticalAlignment = Alignment.Bottom
+          ) {
+            Text(
+              text = tagline,
+              style = MaterialTheme.typography.caption,
+              fontStyle = FontStyle.Italic,
+            )
+          }
         }
       }
 
@@ -216,6 +227,8 @@ fun MovieDetailSection(
   movie: MovieDetail
 ) {
 
+  RatingBarView(rating = movie.vote_average)
+
   Column(
     horizontalAlignment = Alignment.CenterHorizontally
   ) {
@@ -224,7 +237,7 @@ fun MovieDetailSection(
       horizontalArrangement = Arrangement.Center,
       modifier = Modifier
         .fillMaxWidth()
-        .padding(horizontal = 16.dp)
+        .padding(horizontal = 16.dp, vertical = 10.dp)
     ) {
       Text(
         text = Utils.getGenre(genres = movie.genres),
@@ -235,50 +248,72 @@ fun MovieDetailSection(
 
     // Basic info
     Row(
-      horizontalArrangement = Arrangement.SpaceEvenly,
+      horizontalArrangement = Arrangement.SpaceBetween,
       modifier = Modifier
         .fillMaxWidth()
-        .padding(top = 16.dp)
+        .padding(16.dp)
     ) {
-      InfoColumn(
-        icon = R.drawable.ic_calendar_outline,
-        text = "${movie.release_date?.substring(0, 4)}",
-      )
-      InfoColumn(icon = R.drawable.ic_clock_outline, text = Utils.getDuration(movie.runtime))
-      InfoColumn(icon = R.drawable.ic_tv, "13+")
-      InfoColumn(icon = R.drawable.ic_star_outline, text = "${movie.vote_average}")
+      Column(
+        modifier = Modifier,
+        horizontalAlignment = Alignment.Start
+
+      ) {
+        InfoColumn(
+          icon = R.drawable.ic_calendar_outline,
+          text = DateTime.getShortDate(movie.release_date ?: "")
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+        InfoColumn(
+          icon = R.drawable.ic_clock_outline,
+          text = Utils.getDuration(time = movie.runtime ?: 0)
+        )
+      }
+      Column(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+        Column(horizontalAlignment = Alignment.Start) {
+          InfoColumn(icon = R.drawable.ic_monitor_outline, "13+")
+          Spacer(modifier = Modifier.height(10.dp))
+          InfoColumn(icon = R.drawable.ic_globe, text = movie.spoken_languages[0].name)
+        }
+      }
     }
 
+//    RatingBarView()
+
     // Overview
-    Column(
-      modifier = Modifier.padding(16.dp),
-      horizontalAlignment = Alignment.Start
-    ) {
-      Text(text = "Storyline", style = MaterialTheme.typography.h6, color = White)
-      Spacer(modifier = Modifier.height(6.dp))
-      ExpandingText(context = LocalContext.current, text = movie.overview)
+    movie.overview?.let { overview ->
+      Column(
+        modifier = Modifier.padding(16.dp),
+        horizontalAlignment = Alignment.Start
+      ) {
+        Text(
+          text = stringResource(id = R.string.overview),
+          style = MaterialTheme.typography.h6,
+          color = White
+        )
+        Spacer(modifier = Modifier.height(6.dp))
+        ExpandingText(context = LocalContext.current, text = overview)
+      }
     }
   }
 }
 
 @Composable
 fun InfoColumn(@DrawableRes icon: Int, text: String) {
-  Column(
-    modifier = Modifier
+  Row(
+    modifier = Modifier,
+    // horizontalAlignment = Alignment.CenterHorizontally
   ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-      Icon(
-        painter = painterResource(id = icon),
-        contentDescription = null,
-        tint = MaterialTheme.colors.primary.copy(0.6f),
-        modifier = Modifier.height(24.dp)
-      )
-      Spacer(modifier = Modifier.height(4.dp))
-      Text(text = text, fontWeight = Bold)
-//      Text(text = text, style = MaterialTheme.typography.subtitle2)
-//      Spacer(modifier = Modifier.height(2.dp))
-//      Text(text = subText, style = MaterialTheme.typography.body2, color = DavyGrey)
-    }
+    Icon(
+      painter = painterResource(id = icon),
+      contentDescription = null,
+      // tint = MaterialTheme.colors.primary.copy(0.6f),
+      modifier = Modifier.height(24.dp)
+    )
+    Spacer(modifier = Modifier.width(6.dp))
+    Text(text = text)
   }
 }
 
@@ -288,22 +323,21 @@ fun TrailersSection(
 ) {
 
   trailersState.videos.whatIfNotNullOrEmpty { videos ->
-    Column(
-      modifier = Modifier.padding(16.dp)
-    ) {
-      Column(horizontalAlignment = Alignment.Start) {
-        Text(
-          text = "Trailers (${videos.size})",
-          style = MaterialTheme.typography.h6,
-          color = White,
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        LazyRow() {
-          items(items = videos) { video ->
-            VideoThumbnail(video = video)
-          }
+    Column(horizontalAlignment = Alignment.Start) {
+      Text(
+        text = "${stringResource(id = R.string.trailers)}(${videos.size})",
+        style = MaterialTheme.typography.h6,
+        modifier = Modifier.padding(horizontal = 16.dp),
+        color = White,
+      )
+      Spacer(modifier = Modifier.height(10.dp))
+      LazyRow(
+        // modifier = Modifier.padding(horizontal = 16.dp)
+      ) {
+        items(items = videos) { video ->
+          VideoThumbnail(video = video)
+          Spacer(modifier = Modifier.height(10.dp))
         }
-        Spacer(modifier = Modifier.height(10.dp))
       }
     }
   }
@@ -311,15 +345,21 @@ fun TrailersSection(
 
 @Composable
 private fun VideoThumbnail(video: Video) {
-  Surface {
+  val context = LocalContext.current
+
+  Surface(
+    shape = RoundedCornerShape(8.dp),
+    elevation = 8.dp,
+    color = Red
+  ) {
     ConstraintLayout(
       modifier = Modifier
-        .width(150.dp)
-        .height(100.dp)
+        .width(170.dp)
+        .height(120.dp)
         .clickable(
           onClick = {}
         )
-    ){
+    ) {
 
     }
   }
@@ -361,5 +401,34 @@ fun CastItem(
       Spacer(modifier = Modifier.height(2.dp))
       Text(text = cast.character, style = MaterialTheme.typography.body2, color = DavyGrey)
     }
+  }
+}
+
+@SuppressLint("UnrememberedMutableState")
+@Composable
+fun RatingBarView(
+  rating: Double
+) {
+  Row(
+    modifier = Modifier
+      .fillMaxWidth()
+      .padding(vertical = 10.dp),
+    horizontalArrangement = Arrangement.Center,
+    verticalAlignment = Alignment.CenterVertically
+  ) {
+    CustomRatingBar(
+      value = (rating / 2).toFloat(),
+      onValueChange = {},
+      onRatingChanged = {},
+      config = RatingBarConfig().size(20.dp).style(RatingBarStyle.HighLighted)
+    )
+    Spacer(modifier = Modifier.width(10.dp))
+    Text(
+      text = "$rating",
+      style = MaterialTheme.typography.h6,
+      color = DavyGrey,
+      fontWeight = Bold
+    )
+
   }
 }

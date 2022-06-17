@@ -9,3 +9,4 @@ fun String.toBackdropPath() = BuildConfig.BASE_BACKDROP_URL + this
 
 fun String.toCapitalCase() = this.substring(0, 1).uppercase(Locale.ROOT) + this.substring(1)
 
+fun String.toYear() = this.substring(0, 4)
