@@ -2,22 +2,16 @@ package com.freddydev.ciney.ui
 
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.freddydev.ciney.ui.components.CineyBottomBar
 import com.freddydev.ciney.ui.navigation.BottomNavItem
 import com.freddydev.ciney.ui.navigation.CineyNavGraph
-import com.freddydev.ciney.ui.navigation.CineyScreen
-import com.freddydev.ciney.ui.navigation.MainScreens
-import com.freddydev.ciney.ui.theme.ChineseBlack
+import com.freddydev.ciney.ui.theme.BackgroundColor
 import com.freddydev.ciney.ui.theme.CineyTheme
 import com.freddydev.ciney.util.WindowSize
 import com.google.accompanist.insets.ProvideWindowInsets
@@ -34,7 +28,7 @@ fun CineyApp(windowSize: WindowSize) {
       val navController = rememberNavController()
       SideEffect {
         systemUiController.setSystemBarsColor(Color.Transparent, darkIcons = false)
-        systemUiController.setNavigationBarColor(ChineseBlack)
+        systemUiController.setNavigationBarColor(BackgroundColor)
       }
 
       val tabs = remember {

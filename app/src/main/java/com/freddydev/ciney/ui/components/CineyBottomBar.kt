@@ -22,11 +22,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.freddydev.ciney.R
 import com.freddydev.ciney.ui.navigation.BottomNavItem
 import com.freddydev.ciney.ui.navigation.CineyScreen
 import com.freddydev.ciney.ui.navigation.MainScreens
-import com.freddydev.ciney.ui.theme.DavyGrey
+import com.freddydev.ciney.ui.theme.White38
 import com.google.accompanist.insets.*
 
 @Composable
@@ -46,6 +45,7 @@ fun CineyBottomBar(navController: NavController, tabs: List<BottomNavItem>) {
     MainScreens.Discover.route -> bottomBarState.value = true
     MainScreens.Profile.route -> bottomBarState.value = true
     CineyScreen.MovieDetail.route -> bottomBarState.value = false
+    CineyScreen.MediaVideos.route -> bottomBarState.value = false
   }
 
   AnimatedVisibility(
@@ -56,7 +56,7 @@ fun CineyBottomBar(navController: NavController, tabs: List<BottomNavItem>) {
     BottomNavigation(
       backgroundColor = MaterialTheme.colors.background,
       contentColor = Color.White,
-      elevation = 12.dp,
+      elevation = 0.dp,
       modifier = Modifier.systemBarsPadding()
     ) {
       tabs.forEach { tab ->
@@ -76,7 +76,7 @@ fun CineyBottomBar(navController: NavController, tabs: List<BottomNavItem>) {
             )
           },
           selectedContentColor = MaterialTheme.colors.primary,
-          unselectedContentColor = DavyGrey,
+          unselectedContentColor = White38,
           alwaysShowLabel = false,
           selected = isSelected,
           onClick = {

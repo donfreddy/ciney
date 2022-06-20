@@ -35,7 +35,7 @@ import com.google.accompanist.insets.statusBarsPadding
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(
-  showMovieDetailPage: (movieId: Int) -> Unit
+  openMovieDetails: (movieId: Int) -> Unit
 ) {
 
   Column(
@@ -44,7 +44,7 @@ fun HomeScreen(
       .statusBarsPadding(),
   ) {
     HomeContent(
-      showMovieDetailPage = { showMovieDetailPage(it) }
+      showMovieDetailPage = { openMovieDetails(it) }
     )
     Spacer(Modifier.navigationBarsHeight(additional = 56.dp))
   }

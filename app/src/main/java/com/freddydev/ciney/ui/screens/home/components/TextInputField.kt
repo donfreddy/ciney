@@ -17,7 +17,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.freddydev.ciney.R
-import com.freddydev.ciney.ui.theme.DavyGrey
+import com.freddydev.ciney.ui.theme.White38
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -36,7 +36,7 @@ fun TextInputField(label: String, value: String, onValueChanged: (String) -> Uni
     placeholder = {
       Text(
         text = "Search for a movie, tv show...",
-        color = DavyGrey,
+        color = White38,
         maxLines = 1,
         style = MaterialTheme.typography.body1,
         overflow = TextOverflow.Clip

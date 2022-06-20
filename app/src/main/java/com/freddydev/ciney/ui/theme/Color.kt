@@ -1,54 +1,30 @@
 package com.freddydev.ciney.ui.theme
 
 import androidx.compose.material.darkColors
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
+import androidx.compose.material.lightColors
 import androidx.compose.ui.graphics.Color
 
-val YankeesBlue = Color(0xFF14213D)
 val DarkTangerine = Color(0xFFFCA311)
-
-
 val SunsetOrange = Color(0xFFFB5558)
-val PearlAqua = Color(0xFF77C8B2)
-val PastelOrange = Color(0xFFFFC145)
-val Jet = Color(0xFF363636)
-
-
 
 // Ciney colors
-val ChineseBlack = Color(0xFF111112)
-val EerieBlack = Color(0xFF1C1C1E)
-val CharlestonGreen = Color(0xFF27272A)
-val DavyGrey = Color(0xFF5A5A5E)
-val Begonia = Color(0xFFFA7777)
-val CyanBlue = Color(0xFF507ECC)
+val BackgroundColor = Color(0xFF000000)
+val PrimaryColor = Color(0xFFFA7777)
+val SecondaryColor = Color(0xFFFFC145)
 
-private val colorRange = 0..256
+val White87 = Color.White.copy(0.87f)
+val White60 = Color.White.copy(0.6f)
+val White38 = Color.White.copy(0.38f)
 
-fun Color.Companion.randomColor() =
-  Color(colorRange.random(), colorRange.random(), colorRange.random())
+val CineyLightTheme = lightColors()
 
-@Composable
-fun Color.Companion.rateColors(movieRate: Double): List<Color> = remember(movieRate) {
-  when {
-    movieRate <= 4.5 -> listOf(Color(0xffe32d20), Color(0xff9c180e))
-    movieRate < 7 -> listOf(Color(0xffe36922), Color(0xff963d09))
-    movieRate < 8.5 -> listOf(Color(0xff87bf32), Color(0xff578216))
-    else -> listOf(Color(0xff34c937), Color(0xff0d750f))
-  }
-}
-
-val CineyColors = darkColors(
-
-  primary = Begonia,
-  onPrimary = Color.Black,
-  primaryVariant = Begonia,
-  secondary = CyanBlue,
-  onSecondary = Color.Black,
-  error = Begonia,
-  onError = Color.Black,
-  background = ChineseBlack
+val CineyDarkTheme = darkColors(
+  primary = PrimaryColor,
+  secondary = SecondaryColor,
+  surface = BackgroundColor,
+  background = BackgroundColor,
+  onBackground = White87,
+  onSurface = White87,
 
   /* Other default colors to override
      background = Color.White,

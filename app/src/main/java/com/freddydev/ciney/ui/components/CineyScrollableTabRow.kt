@@ -23,7 +23,6 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.freddydev.ciney.ui.theme.DavyGrey
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import kotlinx.coroutines.CoroutineScope
@@ -77,7 +76,7 @@ fun CineyScrollableTabRow(
     tabs.forEachIndexed { tabIndex, tab ->
       Tab(
         selected = tabIndex == tabIndex,
-        unselectedContentColor = DavyGrey,
+        // unselectedContentColor = DavyGrey,
         onClick = { onTabClick(tabIndex) },
         text = {
           Text(

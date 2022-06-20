@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.freddydev.ciney.ui.components.LoadingView
 import com.freddydev.ciney.ui.components.RowTitle
 import com.freddydev.ciney.ui.screens.movie.components.MovieCard
 import com.google.accompanist.insets.navigationBarsHeight
@@ -21,7 +22,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 
 @Composable
 fun MovieScreen(
-  showMovieDetailPage: (movieId: Int) -> Unit
+  openMovieDetails: (movieId: Int) -> Unit
 ) {
   Column(
     modifier = Modifier
@@ -66,7 +67,7 @@ fun PopularMoviesSection(
   popularMoviesState: MovieState
 ) {
   if (popularMoviesState.isLoading) {
-    CircularProgressIndicator(modifier = Modifier)
+    LoadingView(modifier = Modifier.fillMaxSize())
   }
 
   popularMoviesState.movies?.let { movies ->

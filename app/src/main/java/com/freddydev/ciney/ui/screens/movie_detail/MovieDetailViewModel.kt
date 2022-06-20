@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.freddydev.ciney.domain.model.video.Video
 import com.freddydev.ciney.domain.use_case.movie.get_movie.GetMovieUseCase
 import com.freddydev.ciney.domain.use_case.movie.get_movie_credits.GetMovieCreditsUseCase
 import com.freddydev.ciney.domain.use_case.movie.get_movie_images.GetMovieImagesUseCase
@@ -14,6 +13,7 @@ import com.freddydev.ciney.domain.use_case.movie.get_movie_videos.GetMovieVideos
 import com.freddydev.ciney.domain.use_case.movie.get_recommended_movies.GetRecommendedMoviesUseCase
 import com.freddydev.ciney.domain.use_case.movie.get_similar_movies.GetSimilarMoviesUseCase
 import com.freddydev.ciney.ui.common.Constants
+import com.freddydev.ciney.ui.screens.media_videos.VideoState
 import com.freddydev.ciney.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -36,8 +36,8 @@ class MovieDetailViewModel @Inject constructor(
   val movieDetailState: State<MovieDetailState> = _movieDetailState
 
   // Trailers state
-  private val _trailersState = mutableStateOf(MovieVideoState())
-  val trailersState: State<MovieVideoState> = _trailersState
+  private val _trailersState = mutableStateOf(VideoState())
+  val trailersState: State<VideoState> = _trailersState
 
 
   init {
@@ -118,16 +118,16 @@ class MovieDetailViewModel @Inject constructor(
       .onEach { result ->
         when (result) {
           is Resource.Loading -> {
-            _trailersState.value = MovieVideoState(isLoading = true)
+            _trailersState.value = VideoState(isLoading = true)
           }
           is Resource.Success -> {
             println("### Movie Videos Success state")
             println(result.data)
-            _trailersState.value = MovieVideoState(videos = result.data ?: emptyList())
+            _trailersState.value = VideoState(videos = result.data ?: emptyList())
           }
           is Resource.Error -> {
             _trailersState.value =
-              MovieVideoState(error = "${result.message} ?: ${Constants.HTTP_EXCEPT_MSG}")
+              VideoState(error = "${result.message} ?: ${Constants.HTTP_EXCEPT_MSG}")
           }
         }
       }.launchIn(viewModelScope)

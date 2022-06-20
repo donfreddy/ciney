@@ -28,22 +28,19 @@ import com.freddydev.ciney.util.WindowSize
 fun NavGraphBuilder.bottomNaGraph(
   navController: NavHostController,
   windowSize: WindowSize,
+  actions: Actions,
   onSelected: (Long, NavBackStackEntry) -> Unit = { _, _ -> }
 ) {
 
   composable(route = BottomNavItem.Home.route) {
     HomeScreen(
-      showMovieDetailPage = { movieId ->
-        navController.navigate(CineyScreen.MovieDetail.createRoute(movieId))
-      }
+      openMovieDetails = actions.openMovieDetails
     )
   }
 
   composable(route = BottomNavItem.Movie.route) {
     MovieScreen(
-      showMovieDetailPage = { movieId ->
-        navController.navigate(CineyScreen.MovieDetail.createRoute(movieId))
-      }
+      openMovieDetails = actions.openMovieDetails
     )
   }
 

@@ -15,7 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.freddydev.ciney.R
-import com.freddydev.ciney.ui.theme.DavyGrey
+import com.freddydev.ciney.ui.theme.White38
+import com.freddydev.ciney.ui.theme.White60
 import com.google.accompanist.insets.navigationBarsHeight
 import com.google.accompanist.insets.statusBarsPadding
 
@@ -128,7 +129,7 @@ fun ProfileDescription(
     Text(
       text = description,
       style = MaterialTheme.typography.body1,
-      color = DavyGrey
+      color = White38
     )
   }
 }
@@ -161,7 +162,7 @@ fun ProfileStat(
   ) {
     Text(text = numberText, fontWeight = FontWeight.Bold, fontSize = 24.sp)
     Spacer(modifier = Modifier.height(4.dp))
-    Text(text = text, color = DavyGrey)
+    Text(text = text, color = White60)
   }
 }
 
@@ -195,7 +196,7 @@ fun ProfileRow(
     Row() {
       Icon(
         painter = painterResource(id = icon),
-        tint = DavyGrey,
+        tint = White60,
         contentDescription = null,
         modifier = Modifier.padding(start = 10.dp)
       )
@@ -208,7 +209,7 @@ fun ProfileRow(
 
     Icon(
       painter = painterResource(id = R.drawable.ic_arrow_ios_forward),
-      tint = DavyGrey,
+      tint = White60,
       contentDescription = null,
       modifier = Modifier.padding(end = 12.dp)
     )
@@ -219,7 +220,7 @@ fun ProfileRow(
 @Composable
 fun CineyDivider(modifier: Modifier = Modifier) {
   Divider(
-    color = DavyGrey.copy(alpha = 0.1f),
+    color = White38,
     thickness = 1.dp,
     modifier = modifier.padding(horizontal = 12.dp)
   )

@@ -1,11 +1,10 @@
 package com.freddydev.ciney.util.ratingbar
 
-import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.freddydev.ciney.ui.theme.Begonia
-import com.freddydev.ciney.ui.theme.DarkTangerine
+import com.freddydev.ciney.ui.theme.PrimaryColor
+import com.freddydev.ciney.ui.theme.SecondaryColor
 
 class RatingBarConfig {
   var size: Dp = 40.dp
@@ -18,9 +17,9 @@ class RatingBarConfig {
     private set
   var isIndicator: Boolean = true
     private set
-  var activeColor: Color = Begonia
+  var activeColor: Color = SecondaryColor
     private set
-  var inactiveColor: Color = Begonia.copy(alpha = 0.5f)
+  var inactiveColor: Color = PrimaryColor.copy(alpha = 0.5f)
     private set
   var stepSize: StepSize = StepSize.ONE
     private set

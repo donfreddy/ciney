@@ -9,9 +9,6 @@ import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -43,11 +40,12 @@ import com.freddydev.ciney.domain.model.movie.MovieDetail
 import com.freddydev.ciney.domain.model.video.Video
 import com.freddydev.ciney.ui.common.Constants.APP_BAR_COLLAPSED_HEIGHT
 import com.freddydev.ciney.ui.common.Constants.APP_BAR_EXPANDED_HEIGHT
-import com.freddydev.ciney.ui.theme.DavyGrey
-import com.freddydev.ciney.util.DateTime
+import com.freddydev.ciney.ui.screens.media_videos.VideoState
+import com.freddydev.ciney.ui.theme.White38
+import com.freddydev.ciney.ui.theme.White60
+import com.freddydev.ciney.ui.theme.White87
 import com.freddydev.ciney.util.ExpandingText
 import com.freddydev.ciney.util.Utils
-import com.freddydev.ciney.util.extensions.toYear
 import com.freddydev.ciney.util.ratingbar.CustomRatingBar
 import com.freddydev.ciney.util.ratingbar.RatingBarConfig
 import com.freddydev.ciney.util.ratingbar.RatingBarStyle
@@ -59,7 +57,9 @@ import kotlin.math.min
 
 @Composable
 fun MovieDetailScreen(
-  viewModel: MovieDetailViewModel = hiltViewModel()
+  viewModel: MovieDetailViewModel = hiltViewModel(),
+  openMediaVideos: (Int) -> Unit,
+  navigateBack: () -> Unit,
 ) {
   val scrollState = rememberLazyListState()
   val movieState = viewModel.movieDetailState.value
@@ -67,8 +67,13 @@ fun MovieDetailScreen(
   Box(modifier = Modifier.fillMaxSize()) {
 
     movieState.movie?.let { movie ->
-      MovieDetailContent(movie = movie, scrollState = scrollState, viewModel = viewModel)
-      ParallaxToolbar(movie = movie, scrollState = scrollState)
+      MovieDetailContent(
+        movie = movie,
+        scrollState = scrollState,
+        viewModel = viewModel,
+        openMediaVideos = openMediaVideos
+      )
+      ParallaxToolbar(movie = movie, scrollState = scrollState, navigateBack = navigateBack)
     }
 
     if (movieState.isLoading) {
@@ -92,7 +97,8 @@ fun MovieDetailScreen(
 @Composable
 fun ParallaxToolbar(
   movie: MovieDetail,
-  scrollState: LazyListState
+  scrollState: LazyListState,
+  navigateBack: () -> Unit,
 ) {
   val imageHeight = APP_BAR_EXPANDED_HEIGHT - APP_BAR_COLLAPSED_HEIGHT
   val maxOffset =
@@ -140,7 +146,7 @@ fun ParallaxToolbar(
           Row(
             modifier = Modifier
               .fillMaxHeight()
-              .padding(horizontal = 16.dp, vertical = 8.dp),
+              .padding(horizontal = 16.dp),
             verticalAlignment = Alignment.Bottom
           ) {
             Text(
@@ -160,9 +166,11 @@ fun ParallaxToolbar(
       ) {
         Text(
           text = movie.title,
-          fontSize = 26.sp,
-          color = White,
-          fontWeight = Bold,
+          style = MaterialTheme.typography.h5.copy(
+            color = White87,
+            fontWeight = Bold,
+            // fontSize = 26.sp,
+          ),
           maxLines = 1,
           overflow = TextOverflow.Ellipsis,
           modifier = Modifier
@@ -181,7 +189,7 @@ fun ParallaxToolbar(
       .statusBarsPadding()
       .height(APP_BAR_COLLAPSED_HEIGHT)
   ) {
-    IconButton(onClick = { /*TODO*/ }) {
+    IconButton(onClick = { navigateBack() }) {
       Icon(
         painter = painterResource(id = R.drawable.ic_arrow_back),
         contentDescription = null
@@ -208,7 +216,8 @@ fun ParallaxToolbar(
 fun MovieDetailContent(
   movie: MovieDetail,
   scrollState: LazyListState,
-  viewModel: MovieDetailViewModel
+  viewModel: MovieDetailViewModel,
+  openMediaVideos: (Int) -> Unit,
 ) {
   val trailersState = viewModel.trailersState.value
 //  val creditsState = viewModel.creditsState.value
@@ -217,7 +226,11 @@ fun MovieDetailContent(
   LazyColumn(contentPadding = PaddingValues(top = APP_BAR_EXPANDED_HEIGHT), state = scrollState) {
     item {
       MovieDetailSection(movie = movie)
-      TrailersSection(trailersState = trailersState)
+      TrailersSection(
+        movieId = movie.id,
+        trailersState = trailersState,
+        openMediaVideos = openMediaVideos
+      )
     }
   }
 }
@@ -227,7 +240,7 @@ fun MovieDetailSection(
   movie: MovieDetail
 ) {
 
-  RatingBarView(rating = movie.vote_average)
+  RatingBarView(rating = movie.vote_average, count = movie.vote_count)
 
   Column(
     horizontalAlignment = Alignment.CenterHorizontally
@@ -241,29 +254,30 @@ fun MovieDetailSection(
     ) {
       Text(
         text = Utils.getGenre(genres = movie.genres),
-        color = DavyGrey,
+        color = White38,
+        fontSize = 14.sp,
         textAlign = TextAlign.Center
       )
     }
-
+    0
     // Basic info
     Row(
       horizontalArrangement = Arrangement.SpaceBetween,
       modifier = Modifier
         .fillMaxWidth()
-        .padding(16.dp)
+        .padding(horizontal = 16.dp, vertical = 10.dp)
     ) {
       Column(
         modifier = Modifier,
         horizontalAlignment = Alignment.Start
 
       ) {
-        InfoColumn(
+        InfoRow(
           icon = R.drawable.ic_calendar_outline,
-          text = DateTime.getShortDate(movie.release_date ?: "")
+          text = Utils.formatDate(date = movie.release_date ?: "", format = "d MMM yyyy")
         )
         Spacer(modifier = Modifier.height(10.dp))
-        InfoColumn(
+        InfoRow(
           icon = R.drawable.ic_clock_outline,
           text = Utils.getDuration(time = movie.runtime ?: 0)
         )
@@ -271,11 +285,11 @@ fun MovieDetailSection(
       Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
+      ) {
         Column(horizontalAlignment = Alignment.Start) {
-          InfoColumn(icon = R.drawable.ic_monitor_outline, "13+")
+          InfoRow(icon = R.drawable.ic_globe, text = movie.spoken_languages[0].name)
           Spacer(modifier = Modifier.height(10.dp))
-          InfoColumn(icon = R.drawable.ic_globe, text = movie.spoken_languages[0].name)
+          InfoRow(icon = R.drawable.ic_monitor_outline, "13+")
         }
       }
     }
@@ -291,7 +305,7 @@ fun MovieDetailSection(
         Text(
           text = stringResource(id = R.string.overview),
           style = MaterialTheme.typography.h6,
-          color = White
+          color = White87
         )
         Spacer(modifier = Modifier.height(6.dp))
         ExpandingText(context = LocalContext.current, text = overview)
@@ -301,25 +315,27 @@ fun MovieDetailSection(
 }
 
 @Composable
-fun InfoColumn(@DrawableRes icon: Int, text: String) {
+fun InfoRow(@DrawableRes icon: Int, text: String) {
   Row(
     modifier = Modifier,
-    // horizontalAlignment = Alignment.CenterHorizontally
+    verticalAlignment = Alignment.CenterVertically
   ) {
     Icon(
       painter = painterResource(id = icon),
       contentDescription = null,
-      // tint = MaterialTheme.colors.primary.copy(0.6f),
-      modifier = Modifier.height(24.dp)
+      tint = White60,
+      modifier = Modifier.height(20.dp)
     )
     Spacer(modifier = Modifier.width(6.dp))
-    Text(text = text)
+    Text(text = text, color = White38, fontSize = 14.sp)
   }
 }
 
 @Composable
 fun TrailersSection(
-  trailersState: MovieVideoState
+  movieId: Int,
+  trailersState: VideoState,
+  openMediaVideos: (Int) -> Unit
 ) {
 
   trailersState.videos.whatIfNotNullOrEmpty { videos ->
@@ -328,17 +344,21 @@ fun TrailersSection(
         text = "${stringResource(id = R.string.trailers)}(${videos.size})",
         style = MaterialTheme.typography.h6,
         modifier = Modifier.padding(horizontal = 16.dp),
-        color = White,
+        color = White87,
       )
       Spacer(modifier = Modifier.height(10.dp))
-      LazyRow(
-        // modifier = Modifier.padding(horizontal = 16.dp)
-      ) {
-        items(items = videos) { video ->
-          VideoThumbnail(video = video)
-          Spacer(modifier = Modifier.height(10.dp))
-        }
-      }
+      OpenTrailerButton(
+        onClick = { openMediaVideos(movieId) }
+
+      )
+//      LazyRow(
+//        // modifier = Modifier.padding(horizontal = 16.dp)
+//      ) {
+//        items(items = videos) { video ->
+//          VideoThumbnail(video = video)
+//          Spacer(modifier = Modifier.height(10.dp))
+//        }
+//      }
     }
   }
 }
@@ -399,20 +419,18 @@ fun CastItem(
     Column(horizontalAlignment = Alignment.Start) {
       Text(text = cast.name, style = MaterialTheme.typography.h6, color = White)
       Spacer(modifier = Modifier.height(2.dp))
-      Text(text = cast.character, style = MaterialTheme.typography.body2, color = DavyGrey)
+      Text(text = cast.character, style = MaterialTheme.typography.body2, color = White38)
     }
   }
 }
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-fun RatingBarView(
-  rating: Double
-) {
+fun RatingBarView(rating: Double, count: Int) {
   Row(
     modifier = Modifier
       .fillMaxWidth()
-      .padding(vertical = 10.dp),
+      .padding(vertical = 6.dp),
     horizontalArrangement = Arrangement.Center,
     verticalAlignment = Alignment.CenterVertically
   ) {
@@ -420,15 +438,40 @@ fun RatingBarView(
       value = (rating / 2).toFloat(),
       onValueChange = {},
       onRatingChanged = {},
-      config = RatingBarConfig().size(20.dp).style(RatingBarStyle.HighLighted)
+      config = RatingBarConfig().size(16.dp).style(RatingBarStyle.HighLighted)
     )
     Spacer(modifier = Modifier.width(10.dp))
     Text(
-      text = "$rating",
-      style = MaterialTheme.typography.h6,
-      color = DavyGrey,
-      fontWeight = Bold
+      text = "$rating ($count votes)",
+      fontSize = 15.sp,
+      color = White60,
     )
+  }
+}
 
+@Composable
+fun OpenTrailerButton(
+  onClick: () -> Unit,
+  modifier: Modifier = Modifier
+) {
+  Button(
+    modifier = modifier
+      .fillMaxWidth()
+      .padding(horizontal = 16.dp),
+    onClick = onClick
+  ) {
+    Row(
+      modifier = Modifier.padding(vertical = 4.dp),
+      horizontalArrangement = Arrangement.Center,
+      verticalAlignment = Alignment.CenterVertically
+    )
+    {
+      Icon(
+        painter = painterResource(id = R.drawable.ic_star),
+        contentDescription = null
+      )
+      Spacer(modifier = Modifier.width(4.dp))
+      Text(text = "Play Trailer", style = MaterialTheme.typography.button)
+    }
   }
 }

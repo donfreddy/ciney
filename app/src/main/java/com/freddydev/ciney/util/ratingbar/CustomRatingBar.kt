@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import com.freddydev.ciney.util.Utils
-import com.freddydev.ciney.util.Utils.stepSized
+import com.freddydev.ciney.util.extensions.stepSized
 
 sealed class StepSize {
   object ONE : StepSize()

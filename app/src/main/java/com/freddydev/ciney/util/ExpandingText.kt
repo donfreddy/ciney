@@ -13,17 +13,18 @@ import androidx.compose.ui.text.*
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
 import com.freddydev.ciney.R
-import com.freddydev.ciney.ui.theme.Begonia
+import com.freddydev.ciney.ui.theme.PrimaryColor
 import com.freddydev.ciney.ui.theme.CineyFont
+import com.freddydev.ciney.ui.theme.White60
 import java.util.regex.Pattern
 
 @Composable
 fun ExpandingText(
-  context:Context,
+  context: Context,
   text: String,
   modifier: Modifier = Modifier,
   minimizedMaxLines: Int = 4,
-  colorClickableText: Color = Begonia
+  colorClickableText: Color = PrimaryColor
 ) {
   var isExpanded by remember { mutableStateOf(false) }
   val textLayoutResultState = remember { mutableStateOf<TextLayoutResult?>(null) }
@@ -133,10 +134,9 @@ fun ExpandingText(
   SelectionContainer {
     ClickableText(
       text = textWithMoreLess,
-      style = TextStyle(
-        color = MaterialTheme.colors.onBackground.copy(0.8f),
-        fontSize = 15.sp,
-        fontFamily = CineyFont
+      style = MaterialTheme.typography.body1.copy(
+        color = White60,
+        fontSize = 15.sp
       ),
       onClick = { offset ->
         textWithMoreLess.getStringAnnotations(

@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.freddydev.ciney.R
 import com.freddydev.ciney.ui.screens.profile.RoundImage
-import com.freddydev.ciney.util.DateTime
+import com.freddydev.ciney.util.Utils
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -38,7 +38,7 @@ fun AppBAr(
         horizontalAlignment = Alignment.Start
       ) {
         Text(text = "Hello Freddy!", style = MaterialTheme.typography.h6, color = Color.White)
-        Text(text = DateTime.getCurrentDate(), style = MaterialTheme.typography.caption)
+        Text(text = Utils.getCurrentDate(), style = MaterialTheme.typography.caption)
       }
       RoundImage(
         image = painterResource(id = R.drawable.freddy),

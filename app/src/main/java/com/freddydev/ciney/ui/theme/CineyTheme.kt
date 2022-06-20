@@ -4,9 +4,11 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 
 @Composable
-fun CineyTheme(content: @Composable () -> Unit) {
+fun CineyTheme(isDarkTheme: Boolean = true, content: @Composable () -> Unit) {
+  val cineyColors = if (isDarkTheme) CineyDarkTheme else CineyLightTheme
+
   MaterialTheme(
-    colors = CineyColors,
+    colors = cineyColors,
     typography = CineyTypography,
     shapes = CineyShapes,
     content = content

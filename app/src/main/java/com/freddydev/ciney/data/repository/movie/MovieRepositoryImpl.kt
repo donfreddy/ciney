@@ -19,8 +19,8 @@ import com.freddydev.ciney.domain.model.video.Video
 import com.freddydev.ciney.domain.repository.MovieRepository
 import com.freddydev.ciney.ui.common.Constants.HTTP_EXCEPT_MSG
 import com.freddydev.ciney.ui.common.Constants.IO_EXCEPT_MSG
-import com.freddydev.ciney.util.NetworkInfo
 import com.freddydev.ciney.util.Resource
+import com.freddydev.ciney.util.Utils
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -37,7 +37,7 @@ class MovieRepositoryImpl constructor(
 ) : MovieRepository {
 
   override fun getMovies(category: String, page: Int): Flow<Resource<List<Movie>>> = flow {
-    val isNetworkAvailable = NetworkInfo.isConnected(context)
+    val isNetworkAvailable = Utils.isConnected(context)
     println("### Is Network Available: $isNetworkAvailable")
 
     try {
